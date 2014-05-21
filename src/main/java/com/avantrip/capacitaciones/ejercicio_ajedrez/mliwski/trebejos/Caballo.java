@@ -12,17 +12,17 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.TipoM
 
 public class Caballo extends Trebejo {
 	private static final TipoMovimiento TIPO_MOVIMIENTO = TipoMovimiento.Ele;
+	private static final List<TipoMovimiento> TIPOS_ESPERADOS = Arrays.asList(TIPO_MOVIMIENTO);
 	private static final Integer CANTIDAD_MAXIMA_MOVIMIENTOS = 1;
 	
 	//TODO: Pasarla a estatica e inicializar en bloque estatico (no hay riesgo de zona critica en este punto)
 	private List<MovimientoPrecondition> preconditions = new ArrayList<MovimientoPrecondition>();
 	
-	public Caballo() {
-		List<TipoMovimiento> tiposEsperados = Arrays.asList(TIPO_MOVIMIENTO);
-		preconditions.add(new TipoMovimientoCorrectoPrecondition(tiposEsperados));
+	public Caballo(Color color) {
+		super(color);
 		
+		preconditions.add(new TipoMovimientoCorrectoPrecondition(TIPOS_ESPERADOS));
 		preconditions.add(new CantidadMaximaPrecondition(CANTIDAD_MAXIMA_MOVIMIENTOS));
-		
 		preconditions.add(new DestinoOcupablePrecondition());
 	}
 

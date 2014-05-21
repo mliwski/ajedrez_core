@@ -5,7 +5,13 @@ import java.util.List;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.commands.Command;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.notifications.Notification;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Alfil;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Caballo;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Color;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Peon;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Reina;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Rey;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Torre;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Trebejo;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Multimap;
@@ -18,6 +24,73 @@ public class Tablero {
 	
 	private Tablero() {
 		escaques = HashBiMap.create();
+		
+		posicionarTorres(Color.Blanco);
+		posicionarCaballos(Color.Blanco);
+		posicionarAlfiles(Color.Blanco);
+		posicionarReyReina(Color.Blanco);
+		posicionarPeones(Color.Blanco);
+
+		posicionarTorres(Color.Negro);
+		posicionarCaballos(Color.Negro);
+		posicionarAlfiles(Color.Negro);
+		posicionarReyReina(Color.Negro);
+		posicionarPeones(Color.Negro);
+	}
+
+	private void posicionarTorres(Color color) {
+		Integer numero = color.equals(Color.Blanco) ? 1 : 8;
+		Character letra = 'a';
+		Escaque escaque = new Escaque(letra, numero);
+		escaques.put(escaque, new Torre(color));
+		
+		letra = (char)((int)letra + 7);
+		escaque = new Escaque(letra, numero);
+		escaques.put(escaque, new Torre(color));
+	}
+
+	private void posicionarCaballos(Color color) {
+		Integer numero = color.equals(Color.Blanco) ? 1 : 8;
+		Character letra = 'b';
+		Escaque escaque = new Escaque(letra, numero);
+		escaques.put(escaque, new Caballo(color));
+		
+		letra = (char)((int)letra + 5);
+		escaque = new Escaque(letra, numero);
+		escaques.put(escaque, new Caballo(color));
+	}
+	
+	private void posicionarAlfiles(Color color) {
+		Integer numero = color.equals(Color.Blanco) ? 1 : 8;
+		Character letra = 'c';
+		Escaque escaque = new Escaque(letra, numero);
+		escaques.put(escaque, new Alfil(color));
+		
+		letra = (char)((int)letra + 3);
+		escaque = new Escaque(letra, numero);
+		escaques.put(escaque, new Alfil(color));
+	}
+	
+	private void posicionarReyReina(Color color) {
+		Integer numero = color.equals(Color.Blanco) ? 1 : 8;
+		Character letra = 'd';
+		Escaque escaque = new Escaque(letra, numero);
+		escaques.put(escaque, new Rey(color));
+		
+		letra = (char)((int)letra + 1);
+		escaque = new Escaque(letra, numero);
+		escaques.put(escaque, new Reina(color));
+	}
+
+	private void posicionarPeones(Color color) {
+		Integer numero = color.equals(Color.Blanco) ? 2 : 7;
+		Character letra = 'a';
+
+		for(int i=1; i<=8; i++){
+			Escaque escaque = new Escaque(letra, numero);
+			escaques.put(escaque, new Peon(color));
+			letra = (char)((int)letra + i);
+		}
 	}
 	
 	synchronized public static Tablero getInstance() {
@@ -56,5 +129,10 @@ public class Tablero {
 		escaques.put(escaque, trebejo);
 		
 		return trebejoComido;
+	}
+
+	public boolean isAmenazado(Escaque destino) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

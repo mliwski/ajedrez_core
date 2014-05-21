@@ -13,6 +13,7 @@ public class CantidadMaximaPrecondition extends MovimientoPrecondition{
 
 	@Override
 	public void check(Movimiento movimiento) {
+		super.check(movimiento);
 		Integer cantidad = movimiento.getCantidad();
 		if(cantidad > cantidadMaxima ) {
 			throw new MovimientoIlegalException("El trebejo que desea mover solo puede moverse hasta " + cantidadMaxima + " veces (cantidad deseada=" + cantidad + ")");

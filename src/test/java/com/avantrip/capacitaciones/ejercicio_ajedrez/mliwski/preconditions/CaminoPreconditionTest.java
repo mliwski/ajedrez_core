@@ -1,14 +1,9 @@
 package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.Matchers.*;
 
 import org.junit.Test;
-
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
 
 public class CaminoPreconditionTest {
 
@@ -26,12 +21,12 @@ public class CaminoPreconditionTest {
 		
 		assertThat(mockPrecondition_1.getTablero(), is( equalTo(mockPrecondition_2.getTablero()) ));
 	}
-
-	private class MockMovimientoPrecondition extends MovimientoPrecondition {
-
-		@Override
-		public void check(Movimiento movimiento) {
-		}
-		
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void noPermitirCaminoNull() {
+		MockMovimientoPrecondition mockPrecondition = new MockMovimientoPrecondition();
+		mockPrecondition.check(null);
 	}
+
+	private class MockMovimientoPrecondition extends MovimientoPrecondition {}
 }

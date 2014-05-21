@@ -16,6 +16,8 @@ public class TipoMovimientoCorrectoPrecondition extends MovimientoPrecondition{
 
 	@Override
 	public void check(Movimiento movimiento) {
+		super.check(movimiento);
+		
 		TipoMovimiento tipo = movimiento.getTipo();
 		if(tiposEsperados.contains(tipo) == false) {
 			throw new MovimientoIlegalException("El trebejo que desea mover solo puede moverse en " + tiposEsperados + " (movimiento deseado=" + tipo + ")");

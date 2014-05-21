@@ -9,6 +9,7 @@ public class CaminoLibrePrecondition extends MovimientoPrecondition {
 
 	@Override
 	public void check(Movimiento movimiento) {
+		super.check(movimiento);
 		for (Escaque escaque : movimiento.getCamino()) {
 			Trebejo trebejo = tablero.getTrebejo(escaque);
 			if(trebejo != null) {

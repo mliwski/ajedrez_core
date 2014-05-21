@@ -1,7 +1,6 @@
 package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;

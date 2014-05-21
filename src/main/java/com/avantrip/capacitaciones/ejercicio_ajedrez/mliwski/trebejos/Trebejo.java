@@ -10,6 +10,10 @@ public abstract class Trebejo {
 	private Color color;
 	private List<Movimiento> movimientos = new ArrayList<Movimiento>();
 	
+	public Trebejo(Color color) {
+		this.color = color;
+	}
+
 	public final void addMovimiento(Movimiento movimiento) {
 		movimientos.add(movimiento);
 	}
@@ -26,14 +30,6 @@ public abstract class Trebejo {
 		return color;
 	}
 
-	public final void setColor(Color color) {
-		if(color == null) {
-			throw new IllegalStateException("El color de un trebejo no puede ser inexistente");
-		}
-		
-		this.color = color;
-	}
-	
 	public final boolean isTrebejoMovido() {
 		return movimientos.isEmpty();
 	}

@@ -51,7 +51,12 @@ public class CaminoLibrePreconditionTest {
 	}
 	
 	@Test
-	public void shouldNotThrowsMovimientoIlegalException() {
+	public void shouldNotThrowsExceptionBecauseCaminoLibre() {
+		caminoLibrePrecondition.check(unMovimiento);
+	}
+	
+	@Test
+	public void shouldNotThrowsExceptionBecauseEmptyCamino() {
 		when(unMovimiento.getCamino()).thenReturn(Collections.<Escaque>emptyList());
 		
 		caminoLibrePrecondition.check(unMovimiento);

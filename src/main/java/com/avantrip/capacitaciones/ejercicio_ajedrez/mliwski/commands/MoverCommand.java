@@ -17,14 +17,12 @@ public class MoverCommand extends Command {
 	private Movimiento movimiento;
 	private Trebejo trebejo;
 
-	private List<Notification> notifications;
-
 	public MoverCommand(Escaque origen, Escaque destino) {
 		checkArgumentsPreconditions(origen, destino);
-		checkTrebejoEncontradoPrecondition(origen);
+		checkTrebejoEnOrigenPrecondition(origen);
 		
-		
-		//TODO: Con el refactor de direccion de ataque basado en color, esto vuela!!!
+		//TODO: Con el refactor de direccion de ataque basado en color, estas dos lineas siguientes vuelan!!!
+		this.trebejo = tablero.getTrebejo(origen);
 		DireccionAtaque direccionAtaque = trebejo.getColor().getDireccionAtaque();
 		this.movimiento = new Movimiento(origen,destino,direccionAtaque);
 	}
@@ -35,32 +33,31 @@ public class MoverCommand extends Command {
 		}
 	}
 
-	private void checkTrebejoEncontradoPrecondition(Escaque origen) {
+	private void checkTrebejoEnOrigenPrecondition(Escaque origen) {
 		Trebejo trebejoEncontrado = tablero.getTrebejo(origen);
 		if(trebejoEncontrado == null){
 			throw new IllegalArgumentException("Para poder mover, el origen debe tener un trebejo");
-		} else {
-			this.trebejo = trebejoEncontrado;
 		}
 	}
 
 	@Override
 	public List<Notification> ejecutar() {
-		notifications = new ArrayList<Notification>();
-
 		trebejo.checkPreconditions(movimiento);
 		
-		moverTrebejo();
-		
+		List<Notification> notifications = moverTrebejo();
 		return notifications;
 	}
 
 	private List<Notification> moverTrebejo() {
-		Trebejo trebejoComido = tablero.moverTrebejoAEscaque(trebejo, movimiento.getOrigen());
+		List<Notification> notifications = new ArrayList<Notification>();
 		
+		Escaque destino = movimiento.getDestino();
+		Trebejo trebejoComido = tablero.moverTrebejoAEscaque(trebejo, destino);
 		if(trebejoComido != null) {
 			notifications.add(new TrebejoComidoNotification(trebejoComido));
 		}
+		
+		trebejo.addMovimiento(movimiento);
 		
 		return notifications;
 	}

@@ -10,7 +10,11 @@ public abstract class MovimientoPrecondition {
 		this.tablero = Tablero.getInstance();
 	}
 
-	public abstract void check(Movimiento movimiento);
+	public void check(Movimiento movimiento) {
+		if(movimiento == null) {
+			throw new IllegalArgumentException("Se nesecita un movimiento para poder evaluar si cumple la precondicion");
+		}
+	};
 
 	public Tablero getTablero() {
 		return tablero;
