@@ -15,7 +15,7 @@ public class CantidadMaximaPrecondition extends MovimientoPrecondition{
 	public void check(Movimiento movimiento) {
 		Integer cantidad = movimiento.getCantidad();
 		if(cantidad > cantidadMaxima ) {
-			throw new MovimientoIlegalException("La pieza que desea mover solo puede moverse hasta " + cantidadMaxima + " veces (cantidad deseada=" + cantidad + ")");
+			throw new MovimientoIlegalException("El trebejo que desea mover solo puede moverse hasta " + cantidadMaxima + " veces (cantidad deseada=" + cantidad + ")");
 		}
 	}
 }

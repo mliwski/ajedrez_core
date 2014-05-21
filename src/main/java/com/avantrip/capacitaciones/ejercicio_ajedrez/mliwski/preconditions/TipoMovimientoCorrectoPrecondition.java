@@ -18,7 +18,7 @@ public class TipoMovimientoCorrectoPrecondition extends MovimientoPrecondition{
 	public void check(Movimiento movimiento) {
 		TipoMovimiento tipo = movimiento.getTipo();
 		if(tiposEsperados.contains(tipo) == false) {
-			throw new MovimientoIlegalException("La pieza que desea mover solo puede moverse en " + tiposEsperados + " (movimiento deseado=" + tipo + ")");
+			throw new MovimientoIlegalException("El trebejo que desea mover solo puede moverse en " + tiposEsperados + " (movimiento deseado=" + tipo + ")");
 		}
 	}
 }

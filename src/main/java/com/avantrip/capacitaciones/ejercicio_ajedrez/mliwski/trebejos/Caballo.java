@@ -10,7 +10,7 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.Desti
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.MovimientoPrecondition;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.TipoMovimientoCorrectoPrecondition;
 
-public class Caballo extends Pieza {
+public class Caballo extends Trebejo {
 	private static final TipoMovimiento TIPO_MOVIMIENTO = TipoMovimiento.Ele;
 	private static final Integer CANTIDAD_MAXIMA_MOVIMIENTOS = 1;
 	

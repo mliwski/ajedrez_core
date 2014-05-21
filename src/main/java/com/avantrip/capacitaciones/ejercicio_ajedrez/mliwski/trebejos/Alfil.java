@@ -10,7 +10,7 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.Desti
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.MovimientoPrecondition;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.TipoMovimientoCorrectoPrecondition;
 
-public class Alfil extends Pieza {
+public class Alfil extends Trebejo {
 	private static final TipoMovimiento TIPO_MOVIMIENTO = TipoMovimiento.Diagonal;
 	
 	//TODO: Pasarla a estatica e inicializar en bloque estatico (no hay riesgo de zona critica en este punto)

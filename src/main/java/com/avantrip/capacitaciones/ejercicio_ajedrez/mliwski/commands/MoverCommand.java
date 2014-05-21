@@ -8,24 +8,24 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Escaque;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Tablero;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.notifications.Notification;
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.notifications.PiezaComidaNotification;
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Pieza;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.notifications.TrebejoComidoNotification;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Trebejo;
 
 public class MoverCommand extends Command {
 	private static Tablero tablero = Tablero.getInstance();
 	
 	private Movimiento movimiento;
-	private Pieza pieza;
+	private Trebejo trebejo;
 
 	private List<Notification> notifications;
 
 	public MoverCommand(Escaque origen, Escaque destino) {
 		checkArgumentsPreconditions(origen, destino);
-		checkPiezaFoundPrecondition(origen);
+		checkTrebejoEncontradoPrecondition(origen);
 		
 		
 		//TODO: Con el refactor de direccion de ataque basado en color, esto vuela!!!
-		DireccionAtaque direccionAtaque = pieza.getColor().getDireccionAtaque();
+		DireccionAtaque direccionAtaque = trebejo.getColor().getDireccionAtaque();
 		this.movimiento = new Movimiento(origen,destino,direccionAtaque);
 	}
 	
@@ -35,12 +35,12 @@ public class MoverCommand extends Command {
 		}
 	}
 
-	private void checkPiezaFoundPrecondition(Escaque origen) {
-		Pieza piezaFound = tablero.getPieza(origen);
-		if(piezaFound == null){
-			throw new IllegalArgumentException("Para poder mover, el origen debe tener una pieza");
+	private void checkTrebejoEncontradoPrecondition(Escaque origen) {
+		Trebejo trebejoEncontrado = tablero.getTrebejo(origen);
+		if(trebejoEncontrado == null){
+			throw new IllegalArgumentException("Para poder mover, el origen debe tener un trebejo");
 		} else {
-			this.pieza = piezaFound;
+			this.trebejo = trebejoEncontrado;
 		}
 	}
 
@@ -48,18 +48,18 @@ public class MoverCommand extends Command {
 	public List<Notification> ejecutar() {
 		notifications = new ArrayList<Notification>();
 
-		pieza.checkPreconditions(movimiento);
+		trebejo.checkPreconditions(movimiento);
 		
-		moverPieza();
+		moverTrebejo();
 		
 		return notifications;
 	}
 
-	private List<Notification> moverPieza() {
-		Pieza piezaComida = tablero.ponerPiezaEnEscaque(pieza, movimiento.getOrigen());
+	private List<Notification> moverTrebejo() {
+		Trebejo trebejoComido = tablero.moverTrebejoAEscaque(trebejo, movimiento.getOrigen());
 		
-		if(piezaComida != null) {
-			notifications.add(new PiezaComidaNotification(piezaComida));
+		if(trebejoComido != null) {
+			notifications.add(new TrebejoComidoNotification(trebejoComido));
 		}
 		
 		return notifications;

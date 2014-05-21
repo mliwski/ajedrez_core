@@ -6,13 +6,13 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.commands.Command;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.notifications.Notification;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Color;
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Pieza;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Trebejo;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Multimap;
 
 public class Tablero {
-	private HashBiMap<Escaque, Pieza> escaques;
-	private Multimap<Color, Pieza> piezasComidas;
+	private HashBiMap<Escaque, Trebejo> escaques;
+	private Multimap<Color, Trebejo> trebejosComidos;
 	
 	private static Tablero instance;
 	
@@ -27,7 +27,7 @@ public class Tablero {
 		return instance;
 	}
 
-	public Pieza getPieza(Escaque escaque) {
+	public Trebejo getTrebejo(Escaque escaque) {
 		return escaques.get(escaque);
 	}
 
@@ -42,19 +42,19 @@ public class Tablero {
 		return notifications;
 	}
 
-	//TODO: Refactor de nombre para aclarar que retorna pieza comida o pensar si va aca el comer
-	public Pieza ponerPiezaEnEscaque(Pieza pieza, Escaque escaque){
-		Escaque origen = escaques.inverse().get(pieza);
+	//TODO: Refactor de nombre para aclarar que retorna trebejo comido o pensar si va aca el comer
+	public Trebejo moverTrebejoAEscaque(Trebejo trebejo, Escaque escaque){
+		Escaque origen = escaques.inverse().get(trebejo);
 		escaques.remove(origen);
 		
 		//TODO: Soportar peon al paso
-		Pieza piezaComida = escaques.get(escaque);
-		if(piezaComida != null) {
-			piezasComidas.put(pieza.getColor(), pieza);
+		Trebejo trebejoComido = escaques.get(escaque);
+		if(trebejoComido != null) {
+			trebejosComidos.put(trebejo.getColor(), trebejo);
 		}
 		
-		escaques.put(escaque, pieza);
+		escaques.put(escaque, trebejo);
 		
-		return piezaComida;
+		return trebejoComido;
 	}
 }

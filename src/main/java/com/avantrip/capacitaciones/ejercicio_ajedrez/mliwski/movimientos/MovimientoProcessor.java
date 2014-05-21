@@ -86,13 +86,13 @@ public abstract class MovimientoProcessor {
 	}
 	
 	
-	//FIXME: Manera de obtener la direccion ... con el refactor de pasar la direccion de ataque a la pieza no va a ser necesario porque la direccion no va a importar
+	//FIXME: Manera de obtener la direccion ... con el refactor de pasar la direccion de ataque al trebejo no va a ser necesario porque la direccion no va a importar
 	protected Integer getNextEscaqueNumero(DireccionAtaque direccionAtaque, List<DireccionMovimiento> direccion, Integer numero) {
 		DireccionMovimiento direccionMovimiento = direccion.get(0).equals(DireccionMovimiento.Adelante) || direccion.get(0).equals(DireccionMovimiento.Atras) ? direccion.get(0) : direccion.get(1);
 		Integer nextEscaqueNumero = numero + (direccionAtaque.getSigno() * direccionMovimiento.getSigno());
 		return nextEscaqueNumero;
 	}
-	//FIXME: Manera de obtener la direccion ... con el refactor de pasar la direccion de ataque a la pieza no va a ser necesario porque la direccion no va a importar
+	//FIXME: Manera de obtener la direccion ... con el refactor de pasar la direccion de ataque al trebejo no va a ser necesario porque la direccion no va a importar
 	protected Character getNextEscaqueLetra(DireccionAtaque direccionAtaque, List<DireccionMovimiento> direccion, Character letra) {
 		DireccionMovimiento direccionMovimiento = direccion.get(0).equals(DireccionMovimiento.Derecha) || direccion.get(0).equals(DireccionMovimiento.Izquierda) ? direccion.get(0) : direccion.get(1);
 		Integer letraNumericValue = (int)letra;

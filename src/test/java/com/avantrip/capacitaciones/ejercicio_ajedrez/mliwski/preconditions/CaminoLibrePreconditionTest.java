@@ -14,14 +14,14 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Escaque;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Tablero;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.exceptions.MovimientoIlegalException;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Pieza;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Trebejo;
 
 public class CaminoLibrePreconditionTest {
 
 	private Tablero unTablero;
 	private Movimiento unMovimiento;
 	private List<Escaque> camino;
-	private Pieza unaPieza;
+	private Trebejo unTrebejo;
 	private MovimientoPrecondition caminoLibrePrecondition;
 
 	@Before
@@ -34,7 +34,7 @@ public class CaminoLibrePreconditionTest {
 		Escaque escaque_3 = mock(Escaque.class);
 		camino = Arrays.asList(escaque_1, escaque_2, escaque_3);
 		
-		unaPieza = mock(Pieza.class);
+		unTrebejo = mock(Trebejo.class);
 
 		when(unMovimiento.getCamino()).thenReturn(camino);
 		
@@ -45,7 +45,7 @@ public class CaminoLibrePreconditionTest {
 	@Test(expected=MovimientoIlegalException.class)
 	public void shouldThrowsMovimientoIlegalException() {
 		Escaque escaque_2 = camino.get(1);
-		when(unTablero.getPieza(escaque_2)).thenReturn(unaPieza);
+		when(unTablero.getTrebejo(escaque_2)).thenReturn(unTrebejo);
 		
 		caminoLibrePrecondition.check(unMovimiento);
 	}

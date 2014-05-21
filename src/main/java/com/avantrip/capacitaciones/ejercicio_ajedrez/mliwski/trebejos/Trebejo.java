@@ -6,7 +6,7 @@ import java.util.List;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.MovimientoPrecondition;
 
-public abstract class Pieza {
+public abstract class Trebejo {
 	private Color color;
 	private List<Movimiento> movimientos = new ArrayList<Movimiento>();
 	
@@ -28,13 +28,13 @@ public abstract class Pieza {
 
 	public final void setColor(Color color) {
 		if(color == null) {
-			throw new IllegalStateException("El color de una pieza no puede ser inexistente");
+			throw new IllegalStateException("El color de un trebejo no puede ser inexistente");
 		}
 		
 		this.color = color;
 	}
 	
-	public final boolean isPiezaMovida() {
+	public final boolean isTrebejoMovido() {
 		return movimientos.isEmpty();
 	}
 	

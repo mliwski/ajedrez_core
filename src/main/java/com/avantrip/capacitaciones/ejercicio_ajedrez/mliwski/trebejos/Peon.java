@@ -10,7 +10,7 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.Desti
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.MovimientoPrecondition;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.TipoMovimientoCorrectoPrecondition;
 
-public class Peon extends Pieza {
+public class Peon extends Trebejo {
 	private static final TipoMovimiento TIPO_MOVIMIENTO_1 = TipoMovimiento.Vertical;
 	private static final TipoMovimiento TIPO_MOVIMIENTO_2 = TipoMovimiento.Diagonal;
 	private static final Integer CANTIDAD_MAXIMA_MOVIMIENTOS = 1;
