@@ -1,6 +1,6 @@
 package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.notifications;
 
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.piezas.Pieza;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Pieza;
 
 public class PiezaComidaNotification extends SuccesNotification {
 	private Pieza pieza;

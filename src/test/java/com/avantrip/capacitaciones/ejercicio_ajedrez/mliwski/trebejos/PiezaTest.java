@@ -1,4 +1,4 @@
-package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.piezas;
+package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos;
 
 import static org.mockito.Mockito.*;
 
@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Escaque;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.exceptions.MovimientoIlegalException;
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.piezas.Pieza;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Pieza;
 
 public class PiezaTest {
 	private Pieza pieza;

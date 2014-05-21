@@ -1,4 +1,4 @@
-package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.piezas;
+package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos;
 
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.DireccionAtaque;
 

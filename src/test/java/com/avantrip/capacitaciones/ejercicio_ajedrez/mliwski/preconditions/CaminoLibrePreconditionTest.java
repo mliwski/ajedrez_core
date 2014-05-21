@@ -14,7 +14,7 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Escaque;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Tablero;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.exceptions.MovimientoIlegalException;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.piezas.Pieza;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Pieza;
 
 public class CaminoLibrePreconditionTest {
 

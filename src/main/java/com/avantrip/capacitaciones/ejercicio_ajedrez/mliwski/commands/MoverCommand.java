@@ -9,7 +9,7 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Tablero;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.notifications.Notification;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.notifications.PiezaComidaNotification;
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.piezas.Pieza;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Pieza;
 
 public class MoverCommand extends Command {
 	private static Tablero tablero = Tablero.getInstance();

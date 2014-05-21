@@ -5,8 +5,8 @@ import java.util.List;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.commands.Command;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.notifications.Notification;
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.piezas.Color;
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.piezas.Pieza;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Color;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Pieza;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Multimap;
 

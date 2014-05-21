@@ -6,9 +6,9 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Escaque;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.exceptions.MovimientoIlegalException;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.TipoMovimiento;
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.piezas.Color;
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.piezas.Peon;
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.piezas.Pieza;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Color;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Peon;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Pieza;
 
 public class DestinoOcupablePrecondition extends MovimientoPrecondition{
 	//TODO: Pensar como hacer para que no lo utilice un peon, para un peon faltan mas chequeos .... 
