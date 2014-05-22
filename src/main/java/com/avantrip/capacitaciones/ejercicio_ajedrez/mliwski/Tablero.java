@@ -24,20 +24,27 @@ public class Tablero {
 	
 	private Tablero() {
 		escaques = HashBiMap.create();
+	}
+
+	//TODO: Revisar costo y el problema de no poder llamarlo en el constructor por el singleton
+	//TODO: Crear un abstract factory para hacerlo mas prolijo
+	public void inicializar() {
+		escaques = HashBiMap.create();
 		
 		posicionarTorres(Color.Blanco);
 		posicionarCaballos(Color.Blanco);
 		posicionarAlfiles(Color.Blanco);
-		posicionarReyReina(Color.Blanco);
+		posicionarReinaRey(Color.Blanco);
 		posicionarPeones(Color.Blanco);
 
 		posicionarTorres(Color.Negro);
 		posicionarCaballos(Color.Negro);
 		posicionarAlfiles(Color.Negro);
-		posicionarReyReina(Color.Negro);
+		posicionarReinaRey(Color.Negro);
 		posicionarPeones(Color.Negro);
-	}
 
+	}
+	
 	private void posicionarTorres(Color color) {
 		Integer numero = color.equals(Color.Blanco) ? 1 : 8;
 		Character letra = 'a';
@@ -71,15 +78,15 @@ public class Tablero {
 		escaques.put(escaque, new Alfil(color));
 	}
 	
-	private void posicionarReyReina(Color color) {
+	private void posicionarReinaRey(Color color) {
 		Integer numero = color.equals(Color.Blanco) ? 1 : 8;
 		Character letra = 'd';
 		Escaque escaque = new Escaque(letra, numero);
-		escaques.put(escaque, new Rey(color));
+		escaques.put(escaque, new Reina(color));
 		
 		letra = (char)((int)letra + 1);
 		escaque = new Escaque(letra, numero);
-		escaques.put(escaque, new Reina(color));
+		escaques.put(escaque, new Rey(color));
 	}
 
 	private void posicionarPeones(Color color) {
@@ -89,7 +96,7 @@ public class Tablero {
 		for(int i=1; i<=8; i++){
 			Escaque escaque = new Escaque(letra, numero);
 			escaques.put(escaque, new Peon(color));
-			letra = (char)((int)letra + i);
+			letra = (char)((int)letra + 1);
 		}
 	}
 	

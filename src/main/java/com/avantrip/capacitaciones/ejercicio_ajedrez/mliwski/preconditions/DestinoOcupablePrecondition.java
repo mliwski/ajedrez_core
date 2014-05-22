@@ -1,7 +1,7 @@
 package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions;
 
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Escaque;
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.exceptions.MovimientoIlegalException;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.exceptions.DestinoNoOcupableException;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Color;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Trebejo;
@@ -21,7 +21,7 @@ public class DestinoOcupablePrecondition extends MovimientoPrecondition{
 		Color colorDestino = destinoOcupado ? trebejoDestino.getColor() : null;
 		
 		if(destinoOcupado && colorDestino.equals(colorOrigen)){
-			throw new MovimientoIlegalException("El escaque destino esta ocupado por un trebejo el mismo color");
+			throw new DestinoNoOcupableException("El escaque destino esta ocupado por un trebejo el mismo color");
 		}
 	}
 	
