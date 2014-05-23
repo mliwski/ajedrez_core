@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.capturas.CapturaPeonStrategy;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.capturas.CapturaStrategy;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.TipoMovimiento;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.CantidadMaximaPrecondition;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.DestinoOcupablePrecondition;
@@ -19,6 +21,8 @@ public class Peon extends Trebejo {
 	//TODO: Pasarla a estatica e inicializar en bloque estatico (no hay riesgo de zona critica en este punto)
 	private List<MovimientoPrecondition> preconditions = new ArrayList<MovimientoPrecondition>();
 	
+	private CapturaStrategy capturaStrategy;
+	
 	public Peon(Color color) {
 		super(color);
 
@@ -30,11 +34,18 @@ public class Peon extends Trebejo {
 		preconditions.add(new TipoMovimientoCorrectoPrecondition(TIPOS_ESPERADOS));
 		preconditions.add(new CantidadMaximaPrecondition(CANTIDAD_MAXIMA_MOVIMIENTOS));
 		preconditions.add(new DestinoOcupablePrecondition());
+		
+		this.capturaStrategy = new CapturaPeonStrategy();
 	}
 
 	@Override
 	protected List<MovimientoPrecondition> getMovimientoPreconditions() {
 		return this.preconditions;
+	}
+	
+	@Override
+	public CapturaStrategy getCapturaStrategy() {
+		return this.getCapturaStrategy();
 	}
 
 }

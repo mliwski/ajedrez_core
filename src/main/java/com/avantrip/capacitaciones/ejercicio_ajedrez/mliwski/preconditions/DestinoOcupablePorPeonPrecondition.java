@@ -37,7 +37,7 @@ public class DestinoOcupablePorPeonPrecondition extends DestinoOcupablePrecondit
 
 	private void checkArgumentPreconditions(Movimiento movimiento) {
 		if(movimiento == null) {
-			throw new IllegalArgumentException("Se nesecita un movimiento para poder evaluar si cumple la precondicion");
+			throw new IllegalArgumentException("Se necesita un movimiento para poder evaluar si cumple la precondicion");
 		}
 		
 		Escaque origen = movimiento.getOrigen();

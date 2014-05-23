@@ -18,7 +18,7 @@ public class DestinoOcupablePorReyPrecondition extends DestinoOcupablePreconditi
 		boolean destinoAmenazado = tablero.isAmenazado(destino);
 		
 		if(destinoAmenazado) {
-			throw new MovimientoIlegalException("El rey no puede moverse a un escaque done se le pueda hacer jaque mate");
+			throw new MovimientoIlegalException("El rey no puede moverse a un escaque donde se le pueda hacer jaque mate");
 		}
 	}
 

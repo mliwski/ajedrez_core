@@ -29,5 +29,4 @@ public class Alfil extends Trebejo {
 	protected List<MovimientoPrecondition> getMovimientoPreconditions() {
 		return this.preconditions;
 	}
-
 }

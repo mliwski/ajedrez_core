@@ -4,6 +4,7 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Tablero;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
 
 public abstract class MovimientoPrecondition {
+	//FIXME: Es una mala practica, no todos necesitan al tablero y ademas huele feo como esta implementado
 	protected Tablero tablero;
 	
 	public MovimientoPrecondition() {

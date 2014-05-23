@@ -60,7 +60,7 @@ public class MoverCommand extends Command {
 		
 		
 		//TODO: Implementar el notifications evaluator, debe evaluar por:
-		// - Pieza comida (antes o despues de mover?) Se puede basar en un comer strategy del Trebejo
+		// - Pieza comida (antes o despues de mover?) Basarlo en el capturaStrategy del Trebejo
 		// -- Comida para pasante
 		// - Coronacion
 		// - Tablas
