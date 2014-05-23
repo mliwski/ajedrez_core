@@ -23,6 +23,10 @@ public class Peon extends Trebejo {
 		super(color);
 
 		//TODO: Terminar de implementar
+		// Mover en diagonal solo si come
+		// Cantidad dos solo si primer movimiento
+		// Solo hacia adelante
+		// Soportar Peon al paso
 		preconditions.add(new TipoMovimientoCorrectoPrecondition(TIPOS_ESPERADOS));
 		preconditions.add(new CantidadMaximaPrecondition(CANTIDAD_MAXIMA_MOVIMIENTOS));
 		preconditions.add(new DestinoOcupablePrecondition());

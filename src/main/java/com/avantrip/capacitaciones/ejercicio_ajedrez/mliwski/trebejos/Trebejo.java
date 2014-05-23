@@ -8,6 +8,7 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.Movim
 
 public abstract class Trebejo {
 	private Color color;
+	//TODO: Cambiar a Stack/Deque para cuando despues de realizar el movimiento dejo en jaque 
 	private List<Movimiento> movimientos = new ArrayList<Movimiento>();
 	
 	public Trebejo(Color color) {
@@ -26,6 +27,10 @@ public abstract class Trebejo {
 	}; 
 	protected abstract List<MovimientoPrecondition> getMovimientoPreconditions();
 
+	//FIXME: Agregar estrategia de comer y que el command utilice esta estrategia para saber si come.
+	// Si come va a devolver una pieza y eso tambien genera una notification
+	// Si por alguna razon hay que hcer un rollback se hace en el command con el memento de los movimientos
+	
 	public final Color getColor() {
 		return color;
 	}

@@ -1,7 +1,10 @@
 package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.commands;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
+import java.util.Stack;
 
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.DireccionAtaque;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Escaque;
@@ -9,6 +12,7 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Tablero;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.notifications.Notification;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.notifications.TrebejoComidoNotification;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Peon;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Trebejo;
 
 public class MoverCommand extends Command {
@@ -45,6 +49,24 @@ public class MoverCommand extends Command {
 		trebejo.checkPreconditions(movimiento);
 		
 		List<Notification> notifications = moverTrebejo();
+
+		Deque<Trebejo> x = new ArrayDeque<Trebejo>();
+		x.push(trebejo);
+		x.pop();
+		
+		if(trebejo instanceof Peon == false) {
+			
+		}
+		
+		
+		//TODO: Implementar el notifications evaluator, debe evaluar por:
+		// - Pieza comida (antes o despues de mover?) Se puede basar en un comer strategy del Trebejo
+		// -- Comida para pasante
+		// - Coronacion
+		// - Tablas
+		// - Jaque como notificacion
+
+		// TODO: Implementar el jaque evaluator para rollback de mi rey
 		return notifications;
 	}
 

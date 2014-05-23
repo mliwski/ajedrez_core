@@ -13,6 +13,7 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Reina;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Rey;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Torre;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Trebejo;
+import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Multimap;
 
@@ -124,7 +125,8 @@ public class Tablero {
 
 	//TODO: Refactor de nombre para aclarar que retorna trebejo comido o pensar si va aca el comer
 	public Trebejo moverTrebejoAEscaque(Trebejo trebejo, Escaque escaque){
-		Escaque origen = escaques.inverse().get(trebejo);
+		BiMap<Trebejo, Escaque> trebejos = escaques.inverse();
+		Escaque origen = trebejos.get(escaque);
 		escaques.remove(origen);
 		
 		//TODO: Soportar peon al paso
