@@ -15,4 +15,8 @@ public enum Color {
 	public DireccionAtaque getDireccionAtaque(){
 		return this.direccionAtaque;
 	}
+	
+	public Color getContrincante() {
+		return this.equals(Blanco) ? Negro : Blanco ;
+	}
 }

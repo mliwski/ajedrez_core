@@ -11,7 +11,7 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.exceptions.DestinoN
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.exceptions.TipoMovimientoNoPermitidoException;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
 
-public class TorreTest {
+public class ReyTest {
 
 	private Trebejo torre;
 	private Tablero tablero = Tablero.getInstance();

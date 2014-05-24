@@ -13,15 +13,15 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Trebejo;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Multimap;
 
-public class Tablero {
+public class TableroSnapshot {
 	private HashBiMap<Escaque, Trebejo> escaques;
 	private Multimap<Color, Trebejo> trebejosComidos;
 	
 	//TODO: Agregar pila para que contemple el rollback
 	
-	private static Tablero instance;
+	private static TableroSnapshot instance;
 	
-	private Tablero() {
+	private TableroSnapshot() {
 		escaques = HashBiMap.create();
 	}
 
@@ -99,9 +99,9 @@ public class Tablero {
 		}
 	}
 	
-	synchronized public static Tablero getInstance() {
+	synchronized public static TableroSnapshot getInstance() {
 		if(instance == null) {
-			instance = new Tablero();
+			instance = new TableroSnapshot();
 		}
 		return instance;
 	}
@@ -154,9 +154,5 @@ public class Tablero {
 	public void rollback() {
 		// TODO Auto-generated method stub
 		
-	}
-	
-	public TableroSnapshot getSnapshot() {
-		return null;
 	}
 }

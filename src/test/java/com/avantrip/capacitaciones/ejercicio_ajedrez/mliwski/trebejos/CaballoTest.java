@@ -33,7 +33,7 @@ public class CaballoTest {
 	@Test(expected=DestinoNoOcupableException.class)
 	public void shouldThrowExceptionBecauseDestinoNoOcupable() {
 		Trebejo peon_c2 = tablero.getTrebejo(new Escaque('c', 2));
-		tablero.moverTrebejoAEscaque(peon_c2, new Escaque('c', 3));
+		tablero.moverTrebejo(peon_c2, new Escaque('c', 3));
 		
 		movimiento = new Movimiento(new Escaque('b', 1), new Escaque('c', 3), DireccionAtaque.Adelante);
 		

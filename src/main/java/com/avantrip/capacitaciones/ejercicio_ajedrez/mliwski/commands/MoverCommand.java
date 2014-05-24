@@ -9,9 +9,12 @@ import java.util.Stack;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.DireccionAtaque;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Escaque;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Tablero;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.capturas.CapturaStrategy;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.exceptions.ReyAmenazadoException;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.notifications.Notification;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.notifications.TrebejoComidoNotification;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Color;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Peon;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Trebejo;
 
@@ -46,41 +49,42 @@ public class MoverCommand extends Command {
 
 	@Override
 	public List<Notification> ejecutar() {
+		List<Notification> notifications = null;
 		trebejo.checkPreconditions(movimiento);
 		
-		List<Notification> notifications = moverTrebejo();
-
-		Deque<Trebejo> x = new ArrayDeque<Trebejo>();
-		x.push(trebejo);
-		x.pop();
-		
-		if(trebejo instanceof Peon == false) {
-			
-		}
-		
-		
 		//TODO: Implementar el notifications evaluator, debe evaluar por:
-		// - Pieza comida (antes o despues de mover?) Basarlo en el capturaStrategy del Trebejo
+		// - Pieza comida Basarlo en el capturaStrategy del Trebejo
+		CapturaStrategy capturaStrategy = trebejo.getCapturaStrategy();
+		Trebejo trebejoCapturado = capturaStrategy.getTrebejoCapturado(movimiento);
+		
+		tablero.moverTrebejo(movimiento);
+		
+		// TODO: Implementar el jaque evaluator para rollback de mi rey
+		Color color = trebejo.getColor();
+		Color colorContrincante = color.getContrincante();
+		Escaque rey = tablero.getEscaqueRey(color);
+		if(tablero.isEscaqueAmenazadoPorColor(rey, colorContrincante)){
+			tablero.rollback();
+		}
+
+		
+		
+		trebejo.addMovimiento(movimiento);
+
+		//TODO: Implementar el notifications evaluator, debe evaluar por:
 		// -- Comida para pasante
-		// - Coronacion
+		//TODO: Implementar el notification Coronacion (Solo para el peon) 
 		// - Tablas
 		// - Jaque como notificacion
 
-		// TODO: Implementar el jaque evaluator para rollback de mi rey
+
 		return notifications;
 	}
 
-	private List<Notification> moverTrebejo() {
-		List<Notification> notifications = new ArrayList<Notification>();
-		
+	private void rollback(Trebejo trebejoCapturado) {
+		Escaque origen = movimiento.getOrigen();
 		Escaque destino = movimiento.getDestino();
-		Trebejo trebejoComido = tablero.moverTrebejoAEscaque(trebejo, destino);
-		if(trebejoComido != null) {
-			notifications.add(new TrebejoComidoNotification(trebejoComido));
-		}
 		
-		trebejo.addMovimiento(movimiento);
-		
-		return notifications;
+		tablero.moverTrebejo(movimiento);
 	}
 }

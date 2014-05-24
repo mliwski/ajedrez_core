@@ -10,6 +10,7 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.TipoMov
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.CantidadMaximaPrecondition;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.DestinoOcupablePrecondition;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.MovimientoPrecondition;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.ReySeguroPrecondition;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.TipoMovimientoCorrectoPrecondition;
 
 public class Peon extends Trebejo {
@@ -34,6 +35,7 @@ public class Peon extends Trebejo {
 		preconditions.add(new TipoMovimientoCorrectoPrecondition(TIPOS_ESPERADOS));
 		preconditions.add(new CantidadMaximaPrecondition(CANTIDAD_MAXIMA_MOVIMIENTOS));
 		preconditions.add(new DestinoOcupablePrecondition());
+		preconditions.add(new ReySeguroPrecondition());
 		
 		this.capturaStrategy = new CapturaPeonStrategy();
 	}

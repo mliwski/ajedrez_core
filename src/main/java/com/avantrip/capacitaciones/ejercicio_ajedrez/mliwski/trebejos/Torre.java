@@ -8,6 +8,7 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.TipoMov
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.CaminoLibrePrecondition;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.DestinoOcupablePrecondition;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.MovimientoPrecondition;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.ReySeguroPrecondition;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.TipoMovimientoCorrectoPrecondition;
 
 public class Torre extends Trebejo {
@@ -25,6 +26,7 @@ public class Torre extends Trebejo {
 		preconditions.add(new TipoMovimientoCorrectoPrecondition(TIPOS_ESPERADOS));
 		preconditions.add(new CaminoLibrePrecondition());
 		preconditions.add(new DestinoOcupablePrecondition());
+		preconditions.add(new ReySeguroPrecondition());
 	}
 
 	@Override

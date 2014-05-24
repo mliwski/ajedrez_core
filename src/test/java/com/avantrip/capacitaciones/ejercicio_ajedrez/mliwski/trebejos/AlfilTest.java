@@ -40,11 +40,10 @@ public class AlfilTest {
 	
 	@Test(expected=DestinoNoOcupableException.class)
 	public void shouldThrowExceptionBecauseDestinoNoOcupable() {
-		Trebejo peon_a2 = tablero.getTrebejo(new Escaque('a', 2));
-		Trebejo peon_b2 = tablero.getTrebejo(new Escaque('b', 2));
-		tablero.moverTrebejoAEscaque(peon_a2, new Escaque('a', 3));
-		tablero.moverTrebejoAEscaque(peon_b2, new Escaque('b', 3));
-		
+		Movimiento movimiento_aux_1 = new Movimiento(new Escaque('a', 2), new Escaque('a', 3), DireccionAtaque.Adelante);
+		Movimiento movimiento_aux_2 = new Movimiento(new Escaque('b', 2), new Escaque('b', 3), DireccionAtaque.Adelante);
+		tablero.moverTrebejo(movimiento_aux_1);
+		tablero.moverTrebejo(movimiento_aux_2);
 		
 		movimiento = new Movimiento(new Escaque('c', 1), new Escaque('a', 3), DireccionAtaque.Adelante);
 		
@@ -53,11 +52,10 @@ public class AlfilTest {
 	
 	@Test
 	public void shouldNotThrowException() {
-		Trebejo peon_a2 = tablero.getTrebejo(new Escaque('a', 2));
-		Trebejo peon_b2 = tablero.getTrebejo(new Escaque('b', 2));
-		tablero.moverTrebejoAEscaque(peon_a2, new Escaque('a', 4));
-		tablero.moverTrebejoAEscaque(peon_b2, new Escaque('b', 3));
-		
+		Movimiento movimiento_aux_1 = new Movimiento(new Escaque('a', 2), new Escaque('a', 4), DireccionAtaque.Adelante);
+		Movimiento movimiento_aux_2 = new Movimiento(new Escaque('b', 2), new Escaque('b', 3), DireccionAtaque.Adelante);
+		tablero.moverTrebejo(movimiento_aux_1);
+		tablero.moverTrebejo(movimiento_aux_2);
 		
 		movimiento = new Movimiento(new Escaque('c', 1), new Escaque('a', 3), DireccionAtaque.Adelante);
 		
