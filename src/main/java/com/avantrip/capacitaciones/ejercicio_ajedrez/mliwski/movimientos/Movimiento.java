@@ -2,7 +2,6 @@ package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos;
 
 import java.util.List;
 
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.DireccionAtaque;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Escaque;
 
 public class Movimiento {
@@ -10,10 +9,8 @@ public class Movimiento {
 
 	private Escaque origen;
 	private Escaque destino;
-	private DireccionAtaque direccionAtaque;
 	
 	private TipoMovimiento tipo;
-	private List<DireccionMovimiento> direccion;
 	private Integer cantidad;
 	private List<Escaque> camino;
 	
@@ -55,11 +52,7 @@ public class Movimiento {
 	public Integer getCantidad() {
 		return this.cantidad;
 	}
-	
-	public List<DireccionMovimiento> getDireccion() {
-		return this.direccion;
-	}
-	
+
 	public List<Escaque> getCamino() {
 		return this.camino;
 	}
@@ -74,6 +67,6 @@ public class Movimiento {
 
 	@Override
 	public String toString() {
-		return origen + " -> " + destino + this.tipo + ", " + this.cantidad + ", " + this.direccion;
+		return origen + " -> " + destino + ", " + this.tipo + " (" + this.cantidad + ")";
 	}
 }

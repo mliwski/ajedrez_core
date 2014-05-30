@@ -1,7 +1,6 @@
 package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos;
 
 import java.util.Collections;
-import java.util.List;
 
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Escaque;
 
@@ -31,9 +30,13 @@ public class MovimientoEleProcessor extends MovimientoProcessor {
 		DatosMovimiento datosMovimiento = new DatosMovimiento();
 		datosMovimiento.setTipo(TipoMovimiento.Ele);
 		datosMovimiento.setCantidad(1);
-		List<Escaque> camino = Collections.emptyList();
-		datosMovimiento.setCamino(camino);
+		datosMovimiento.setCamino(Collections.<Escaque>emptyList());
 		
 		return datosMovimiento;
+	}
+
+	@Override
+	protected Escaque getEscaqueSiguiente(Escaque escaque, Integer incrementoLetra, Integer incrementoNumero) {
+		throw new IllegalStateException("Este metodo no debe ser llamado nunca para un movimiento en ele, ya que no existe el camino");
 	}
 }
