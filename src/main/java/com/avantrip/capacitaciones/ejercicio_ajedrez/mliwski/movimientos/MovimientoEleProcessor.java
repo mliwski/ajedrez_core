@@ -1,10 +1,8 @@
 package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.DireccionAtaque;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Escaque;
 
 public class MovimientoEleProcessor extends MovimientoProcessor {
@@ -29,20 +27,13 @@ public class MovimientoEleProcessor extends MovimientoProcessor {
 	}
 
 	@Override
-	protected DatosMovimiento getDatosMovimiento(Escaque origen, Escaque destino, DireccionAtaque direccionAtaque) {
+	protected DatosMovimiento getDatosMovimiento(Escaque origen, Escaque destino) {
 		DatosMovimiento datosMovimiento = new DatosMovimiento();
 		datosMovimiento.setTipo(TipoMovimiento.Ele);
 		datosMovimiento.setCantidad(1);
-		ArrayList<DireccionMovimiento> direccion = super.getDireccion(origen, destino, direccionAtaque);
-		datosMovimiento.setDireccion(direccion);
-		List<Escaque> camino = getCamino(origen, destino, direccionAtaque, direccion);
+		List<Escaque> camino = Collections.emptyList();
 		datosMovimiento.setCamino(camino);
 		
 		return datosMovimiento;
-	}
-
-	//El movimiento en L tiene dos posibles caminos, con lo cual se considera que el camino es vacio
-	private List<Escaque> getCamino(Escaque origen, Escaque destino, DireccionAtaque direccionAtaque, List<DireccionMovimiento> direccion) {
-		return Collections.emptyList();
 	}
 }

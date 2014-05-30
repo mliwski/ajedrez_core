@@ -6,7 +6,6 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Escaque;
 
 public class DatosMovimiento {
 	private TipoMovimiento tipo;
-	private List<DireccionMovimiento> direccion;
 	private Integer cantidad;
 	private List<Escaque> camino;
 	
@@ -16,9 +15,6 @@ public class DatosMovimiento {
 	public TipoMovimiento getTipo() {
 		return tipo;
 	}
-	public List<DireccionMovimiento> getDireccion() {
-		return direccion;
-	}
 	public Integer getCantidad() {
 		return cantidad;
 	}
@@ -27,9 +23,6 @@ public class DatosMovimiento {
 	}
 	public void setTipo(TipoMovimiento tipo) {
 		this.tipo = tipo;
-	}
-	public void setDireccion(List<DireccionMovimiento> direccion) {
-		this.direccion = direccion;
 	}
 	public void setCantidad(Integer cantidad) {
 		this.cantidad = cantidad;

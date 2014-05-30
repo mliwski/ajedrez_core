@@ -18,27 +18,25 @@ public class Movimiento {
 	private List<Escaque> camino;
 	
 	
-	public Movimiento(Escaque origen, Escaque destino, DireccionAtaque direccionAtaque) {
-		checkArgumentsPreconditions(origen, destino, direccionAtaque);
+	public Movimiento(Escaque origen, Escaque destino) {
+		checkArgumentsPreconditions(origen, destino);
 		
 		this.origen = origen;
 		this.destino = destino;
-		this.direccionAtaque = direccionAtaque;
 		
-		DatosMovimiento datosMovimiento = datosProcessor.detectar(origen, destino, direccionAtaque);
+		DatosMovimiento datosMovimiento = datosProcessor.detectar(origen, destino);
 		this.tipo = datosMovimiento.getTipo();
 		this.cantidad = datosMovimiento.getCantidad();
-		this.direccion = datosMovimiento.getDireccion();
 		this.camino = datosMovimiento.getCamino();
 		
 	}
 
-	private void checkArgumentsPreconditions(Escaque origen, Escaque destino, DireccionAtaque direccionAtaque) {
+	private void checkArgumentsPreconditions(Escaque origen, Escaque destino) {
 		if(origen.equals(destino)) {
 			throw new IllegalArgumentException("El origen de un movimiento debe ser distinto del destino");
 		}
-		if(origen == null || destino == null || direccionAtaque == null) {
-			throw new IllegalArgumentException("Para construir el escaque movimiento se debe conocer el orige, el destino y la direccion de ataque");
+		if(origen == null || destino == null ) {
+			throw new IllegalArgumentException("Para construir el escaque movimiento se debe conocer el origen y el destino.");
 		}
 	}
 	
@@ -48,10 +46,6 @@ public class Movimiento {
 
 	public Escaque getDestino() {
 		return destino;
-	}
-
-	public DireccionAtaque getDireccionAtaque() {
-		return direccionAtaque;
 	}
 
 	public TipoMovimiento getTipo() {
@@ -80,6 +74,6 @@ public class Movimiento {
 
 	@Override
 	public String toString() {
-		return origen + " -> " + destino + "(ataque:" + direccionAtaque +") = " + this.tipo + ", " + this.cantidad + ", " + this.direccion;
+		return origen + " -> " + destino + this.tipo + ", " + this.cantidad + ", " + this.direccion;
 	}
 }

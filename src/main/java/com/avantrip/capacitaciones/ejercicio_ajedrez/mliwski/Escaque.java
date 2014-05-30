@@ -1,8 +1,7 @@
 package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski;
 
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.exceptions.EscaqueException;
 
-public class Escaque implements Cloneable{
+public class Escaque implements Comparable<Escaque> {
 	public static final Character LETRA_MINIMA = 'a';
 	public static final Character LETRA_MAXIMA = 'h';
 	public static final Integer NUMERO_MINIMO = 1;
@@ -17,11 +16,11 @@ public class Escaque implements Cloneable{
 	}
 	
 	public Escaque(Character letra, Integer numero){
-		if(Math.abs(LETRA_MINIMA.compareTo(letra)) < 0 || Math.abs(LETRA_MAXIMA.compareTo(letra)) > 7) {
-			throw new EscaqueException("En el ajedrez la letra de los escaques debe estar entre " + LETRA_MINIMA + " y " + LETRA_MAXIMA + "( recibido = " + letra + ")");
+		if(LETRA_MINIMA.compareTo(letra) > 0 || LETRA_MAXIMA.compareTo(letra) < 0) {
+			throw new IllegalArgumentException("En el ajedrez la letra de los escaques debe estar entre " + LETRA_MINIMA + " y " + LETRA_MAXIMA + "( recibido = " + letra + ")");
 		}
 		if(numero < NUMERO_MINIMO || numero > NUMERO_MAXIMO) {
-			throw new EscaqueException("En el ajedrez el numero de los escaques debe estar entre " + NUMERO_MINIMO + " y " + NUMERO_MAXIMO + "( recibido = " + numero + ")");
+			throw new IllegalArgumentException("En el ajedrez el numero de los escaques debe estar entre " + NUMERO_MINIMO + " y " + NUMERO_MAXIMO + "( recibido = " + numero + ")");
 		}
 			
 		this.letra = letra;
@@ -35,20 +34,36 @@ public class Escaque implements Cloneable{
 		return letra;
 	}
 	
-	public Integer getDistanciaNumero(Escaque escaque){
-		if(escaque == null) {
+	public Integer getDistanciaNumero(Escaque otroEscaque){
+		if(otroEscaque == null) {
 			throw new IllegalArgumentException("No se puede medir la distancia a un escaque inexistente");
 		}
-		return Math.abs(escaque.getNumero() - this.numero);
+		return this.numero - otroEscaque.getNumero();
 	}
 	
-	public Integer getDistanciaLetra(Escaque escaque){
-		if(escaque == null) {
+	public Integer getDistanciaLetra(Escaque otroEscaque){
+		if(otroEscaque == null) {
 			throw new IllegalArgumentException("No se puede medir la distancia a un escaque inexistente");
 		}
-		return Math.abs(escaque.getLetra().compareTo(this.letra));
+		return this.letra.compareTo(otroEscaque.getLetra());
 	}
 
+	public int compareTo(Escaque otroEscaque) {
+		Integer result = 0;
+		boolean isDifferentEscaque = this.equals(otroEscaque) == false;
+		
+		if(isDifferentEscaque) {
+			Integer distanciaLetra = this.getDistanciaLetra(otroEscaque);
+			Integer normaLetra = distanciaLetra == 0 ? 0 : distanciaLetra/Math.abs(distanciaLetra);
+		
+			Integer distanciaNumero = this.getDistanciaNumero(otroEscaque);
+			Integer normaNumero = distanciaNumero == 0 ? 0 : distanciaNumero/Math.abs(distanciaNumero);
+			
+			result = normaNumero + normaLetra >= 0 ? 1 : -1;
+		}
+		return result;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -5,30 +5,13 @@ import java.util.List;
 
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.DireccionAtaque;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Escaque;
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.exceptions.TipoMovimientoDesconocidoException;
 
-public abstract class MovimientoProcessor {
-	private MovimientoProcessor next;
+public abstract class MovimientoDireccionadoProcessor extends MovimientoProcessor {
 	
-	public MovimientoProcessor(MovimientoProcessor next) {
-		this.next = next;
+	public MovimientoDireccionadoProcessor(MovimientoProcessor next) {
+		super(next);
 	}
 
-	public DatosMovimiento detectar(Escaque origen, Escaque destino) {
-		DatosMovimiento datosMovimiento = null;
-		if(isTipoDetectado(origen, destino)) {
-			datosMovimiento = getDatosMovimiento(origen, destino);
-  		} else if(this.next != null) {
-  			datosMovimiento = this.next.detectar(origen, destino);
-		} else {
-			throw new TipoMovimientoDesconocidoException("El tipo de movimiento que se desea realizar es desconocido en el ajedrez");
-		}
-		
-		return datosMovimiento;
-	}
-	protected abstract boolean isTipoDetectado(Escaque origen, Escaque destino);
-	protected abstract DatosMovimiento getDatosMovimiento(Escaque origen, Escaque destino);
-	
 	// FIXME: Explotar en 4 metodos y dejar la implementacion del detector en cada processor
 	protected ArrayList<DireccionMovimiento> getDireccion(Escaque origen, Escaque destino,
 			DireccionAtaque direccionAtaque) {

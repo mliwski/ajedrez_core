@@ -22,7 +22,7 @@ public class MovimientoVerticalProcessor extends MovimientoProcessor {
 	}
 	
 	@Override
-	protected DatosMovimiento getDatosMovimiento(Escaque origen, Escaque destino, DireccionAtaque direccionAtaque) {
+	protected DatosMovimiento getDatosMovimiento(Escaque origen, Escaque destino) {
 		DatosMovimiento datosMovimiento = new DatosMovimiento();
 		
 		datosMovimiento.setTipo(TipoMovimiento.Vertical);
@@ -30,16 +30,13 @@ public class MovimientoVerticalProcessor extends MovimientoProcessor {
 		Integer cantidad = origen.getDistanciaNumero(destino);
 		datosMovimiento.setCantidad(cantidad);
 		
-		ArrayList<DireccionMovimiento> direccion = super.getDireccion(origen, destino, direccionAtaque);
-		datosMovimiento.setDireccion(direccion);
-		
-		List<Escaque> camino = getCamino(origen, destino, direccionAtaque, direccion);
+		List<Escaque> camino = getCamino(origen, destino);
 		datosMovimiento.setCamino(camino);
 		
 		return datosMovimiento;
 	}
 
-	private List<Escaque> getCamino(Escaque origen, Escaque destino, DireccionAtaque direccionAtaque, List<DireccionMovimiento> direccion) {
+	private List<Escaque> getCamino(Escaque origen, Escaque destino) {
 		List<Escaque> camino = new ArrayList<Escaque>();
 		Escaque nextEscaque = getNextEscaque(origen, direccionAtaque, direccion);
 
