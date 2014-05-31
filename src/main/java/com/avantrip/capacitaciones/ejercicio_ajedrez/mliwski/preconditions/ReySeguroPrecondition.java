@@ -13,21 +13,21 @@ public class ReySeguroPrecondition extends MovimientoPrecondition {
 	@Override
 	public void check(Movimiento movimiento) {
 		super.check(movimiento);
-		Tablero tableroCopy = null;
-		try {
-			tableroCopy = (Tablero) tablero.clone();
-		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		Escaque origen = movimiento.getOrigen();
-		Trebejo trebejo = tableroCopy.getTrebejo(origen);
-		Color color = trebejo.getColor();
-		Color colorContrincante = color.getContrincante();
-		Escaque rey = tableroCopy.getEscaqueRey(color);
-		if(tablero.isEscaqueAmenazadoPorColor(rey, colorContrincante)){
-			throw new ReyAmenazadoException("El movimiento que se intenta realizar deja al rey en jaque");
-		}
+//		Tablero tableroCopy = null;
+//		try {
+//			tableroCopy = (Tablero) tablero.clone();
+//		} catch (CloneNotSupportedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		Escaque origen = movimiento.getOrigen();
+//		Trebejo trebejo = tableroCopy.getTrebejo(origen);
+//		Color color = trebejo.getColor();
+//		Color colorContrincante = color.getContrincante();
+//		Escaque rey = tableroCopy.getEscaqueRey(color);
+//		if(tablero.isEscaqueAmenazadoPorColor(rey, colorContrincante)){
+//			throw new ReyAmenazadoException("El movimiento que se intenta realizar deja al rey en jaque");
+//		}
 	}
 }

@@ -136,17 +136,17 @@ public class Tablero {
 		DireccionAtaque direccionAtaque = color.getContrincante().getDireccionAtaque();
 		
 		//FIXME: Refactorear POR DIOS!!!!
-		for (Trebejo trebejo : escaques.values()) {
-			if(trebejo.getColor().equals(color)) {
-				Movimiento movimiento = new Movimiento(escaques.inverse().get(trebejo), destino, direccionAtaque);
-				try {
-					trebejo.checkPreconditions(movimiento);
-					return true;
-				} catch(MovimientoIlegalException movimientoIlegalException){
-					
-				}
-			}
-		}
+//		for (Trebejo trebejo : escaques.values()) {
+//			if(trebejo.getColor().equals(color)) {
+//				Movimiento movimiento = new Movimiento(escaques.inverse().get(trebejo), destino, direccionAtaque);
+//				try {
+//					trebejo.checkPreconditions(movimiento);
+//					return true;
+//				} catch(MovimientoIlegalException movimientoIlegalException){
+//					
+//				}
+//			}
+//		}
 		return false;
 	}
 
@@ -155,8 +155,8 @@ public class Tablero {
 		// TODO Auto-generated method stub
 		
 	}
-	
-	public TableroSnapshot getSnapshot() {
-		return null;
-	}
+//	
+//	public TableroSnapshot getSnapshot() {
+//		return null;
+//	}
 }

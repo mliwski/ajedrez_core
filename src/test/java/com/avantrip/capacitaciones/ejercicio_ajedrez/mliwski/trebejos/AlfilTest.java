@@ -26,38 +26,38 @@ public class AlfilTest {
 	
 	@Test(expected=TipoMovimientoNoPermitidoException.class)
 	public void shouldThrowExceptionBecauseMalTipo() {
-		movimiento = new Movimiento(new Escaque('c', 1), new Escaque('d', 3), DireccionAtaque.Adelante);
+		movimiento = new Movimiento(new Escaque('c', 1), new Escaque('d', 3));
 		
 		alfil.checkPreconditions(movimiento);
 	}
 
 	@Test(expected=CaminoOcupadoException.class)
 	public void shouldThrowExceptionBecauseCaminoOcupado() {
-		movimiento = new Movimiento(new Escaque('c', 1), new Escaque('a', 3), DireccionAtaque.Adelante);
+		movimiento = new Movimiento(new Escaque('c', 1), new Escaque('a', 3));
 		
 		alfil.checkPreconditions(movimiento);
 	}
 	
 	@Test(expected=DestinoNoOcupableException.class)
 	public void shouldThrowExceptionBecauseDestinoNoOcupable() {
-		Movimiento movimiento_aux_1 = new Movimiento(new Escaque('a', 2), new Escaque('a', 3), DireccionAtaque.Adelante);
-		Movimiento movimiento_aux_2 = new Movimiento(new Escaque('b', 2), new Escaque('b', 3), DireccionAtaque.Adelante);
+		Movimiento movimiento_aux_1 = new Movimiento(new Escaque('a', 2), new Escaque('a', 3));
+		Movimiento movimiento_aux_2 = new Movimiento(new Escaque('b', 2), new Escaque('b', 3));
 		tablero.moverTrebejo(movimiento_aux_1);
 		tablero.moverTrebejo(movimiento_aux_2);
 		
-		movimiento = new Movimiento(new Escaque('c', 1), new Escaque('a', 3), DireccionAtaque.Adelante);
+		movimiento = new Movimiento(new Escaque('c', 1), new Escaque('a', 3));
 		
 		alfil.checkPreconditions(movimiento);
 	}
 	
 	@Test
 	public void shouldNotThrowException() {
-		Movimiento movimiento_aux_1 = new Movimiento(new Escaque('a', 2), new Escaque('a', 4), DireccionAtaque.Adelante);
-		Movimiento movimiento_aux_2 = new Movimiento(new Escaque('b', 2), new Escaque('b', 3), DireccionAtaque.Adelante);
+		Movimiento movimiento_aux_1 = new Movimiento(new Escaque('a', 2), new Escaque('a', 4));
+		Movimiento movimiento_aux_2 = new Movimiento(new Escaque('b', 2), new Escaque('b', 3));
 		tablero.moverTrebejo(movimiento_aux_1);
 		tablero.moverTrebejo(movimiento_aux_2);
 		
-		movimiento = new Movimiento(new Escaque('c', 1), new Escaque('a', 3), DireccionAtaque.Adelante);
+		movimiento = new Movimiento(new Escaque('c', 1), new Escaque('a', 3));
 		
 		alfil.checkPreconditions(movimiento);
 	}

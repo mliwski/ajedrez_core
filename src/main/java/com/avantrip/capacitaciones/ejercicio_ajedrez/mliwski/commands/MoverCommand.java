@@ -1,21 +1,13 @@
 package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.commands;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
 import java.util.List;
-import java.util.Stack;
 
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.DireccionAtaque;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Escaque;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Tablero;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.capturas.CapturaStrategy;
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.exceptions.ReyAmenazadoException;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.notifications.Notification;
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.notifications.TrebejoComidoNotification;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Color;
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Peon;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Trebejo;
 
 public class MoverCommand extends Command {
@@ -28,10 +20,7 @@ public class MoverCommand extends Command {
 		checkArgumentsPreconditions(origen, destino);
 		checkTrebejoEnOrigenPrecondition(origen);
 		
-		//TODO: Con el refactor de direccion de ataque basado en color, estas dos lineas siguientes vuelan!!!
-		this.trebejo = tablero.getTrebejo(origen);
-		DireccionAtaque direccionAtaque = trebejo.getColor().getDireccionAtaque();
-		this.movimiento = new Movimiento(origen,destino,direccionAtaque);
+		this.movimiento = new Movimiento(origen,destino);
 	}
 	
 	private void checkArgumentsPreconditions(Escaque origen, Escaque destino) {
@@ -79,12 +68,5 @@ public class MoverCommand extends Command {
 
 
 		return notifications;
-	}
-
-	private void rollback(Trebejo trebejoCapturado) {
-		Escaque origen = movimiento.getOrigen();
-		Escaque destino = movimiento.getDestino();
-		
-		tablero.moverTrebejo(movimiento);
 	}
 }

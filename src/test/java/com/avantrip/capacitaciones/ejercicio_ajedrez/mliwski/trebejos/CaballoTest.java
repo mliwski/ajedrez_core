@@ -25,7 +25,7 @@ public class CaballoTest {
 	
 	@Test(expected=TipoMovimientoNoPermitidoException.class)
 	public void shouldThrowExceptionBecauseMalTipo() {
-		movimiento = new Movimiento(new Escaque('c', 1), new Escaque('c', 2), DireccionAtaque.Adelante);
+		movimiento = new Movimiento(new Escaque('c', 1), new Escaque('c', 2));
 		
 		caballo.checkPreconditions(movimiento);
 	}
@@ -33,16 +33,16 @@ public class CaballoTest {
 	@Test(expected=DestinoNoOcupableException.class)
 	public void shouldThrowExceptionBecauseDestinoNoOcupable() {
 		Trebejo peon_c2 = tablero.getTrebejo(new Escaque('c', 2));
-		tablero.moverTrebejo(peon_c2, new Escaque('c', 3));
+		tablero.moverTrebejo(new Movimiento(new Escaque('c', 2), new Escaque('c', 3)));
 		
-		movimiento = new Movimiento(new Escaque('b', 1), new Escaque('c', 3), DireccionAtaque.Adelante);
+		movimiento = new Movimiento(new Escaque('b', 1), new Escaque('c', 3));
 		
 		caballo.checkPreconditions(movimiento);
 	}
 
 	@Test
 	public void shouldNotThrowException() {
-		movimiento = new Movimiento(new Escaque('b', 1), new Escaque('c', 3), DireccionAtaque.Adelante);
+		movimiento = new Movimiento(new Escaque('b', 1), new Escaque('c', 3));
 		
 		caballo.checkPreconditions(movimiento);
 	}
