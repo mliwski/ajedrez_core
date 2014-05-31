@@ -55,7 +55,10 @@ public abstract class MovimientoProcessor {
 		Integer normaNumero = distanciaNumero == 0 ? 0 : distanciaNumero/Math.abs(distanciaNumero);
 		return normaNumero;
 	}
-	protected abstract Escaque getEscaqueSiguiente(Escaque escaque, Integer incrementoLetra, Integer incrementoNumero);
+	
+	private Escaque getEscaqueSiguiente(Escaque escaque, Integer incrementoLetra, Integer incrementoNumero) {
+		return new Escaque(this.getLetraSiguiente(escaque,incrementoLetra), this.getNumeroSiguiente(escaque,incrementoNumero));
+	}
 	
 	protected final Character getLetraSiguiente(Escaque nextEscaque, Integer incremento) {
 		return (char)((int)nextEscaque.getLetra() + incremento);

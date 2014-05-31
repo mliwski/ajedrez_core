@@ -33,9 +33,4 @@ public class MovimientoHorizontalProcessor extends MovimientoProcessor {
 		
 		return datosMovimiento;
 	}
-
-	@Override
-	protected Escaque getEscaqueSiguiente(Escaque escaque, Integer incrementoLetra, Integer incrementoNumero) {
-		return new Escaque(super.getLetraSiguiente(escaque,incrementoLetra), escaque.getNumero());
-	}
 }

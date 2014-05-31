@@ -16,8 +16,8 @@ public class MovimientoEleProcessor extends MovimientoProcessor {
 
 	@Override
 	protected boolean isTipoDetectado(Escaque origen, Escaque destino) {
-		Integer distanciaNumero = origen.getDistanciaNumero(destino);
-		Integer distanciaLetra = origen.getDistanciaLetra(destino);
+		Integer distanciaNumero = Math.abs(origen.getDistanciaNumero(destino));
+		Integer distanciaLetra = Math.abs(origen.getDistanciaLetra(destino));
 		
 		boolean eleHorizontal = distanciaNumero == 1 && distanciaLetra == 2;
 		boolean eleVertical = distanciaNumero == 2 && distanciaLetra == 1;
@@ -33,10 +33,5 @@ public class MovimientoEleProcessor extends MovimientoProcessor {
 		datosMovimiento.setCamino(Collections.<Escaque>emptyList());
 		
 		return datosMovimiento;
-	}
-
-	@Override
-	protected Escaque getEscaqueSiguiente(Escaque escaque, Integer incrementoLetra, Integer incrementoNumero) {
-		throw new IllegalStateException("Este metodo no debe ser llamado nunca para un movimiento en ele, ya que no existe el camino");
 	}
 }

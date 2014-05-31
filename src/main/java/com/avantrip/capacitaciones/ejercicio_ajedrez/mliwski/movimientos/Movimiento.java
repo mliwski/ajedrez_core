@@ -29,11 +29,11 @@ public class Movimiento {
 	}
 
 	private void checkArgumentsPreconditions(Escaque origen, Escaque destino) {
-		if(origen.equals(destino)) {
-			throw new IllegalArgumentException("El origen de un movimiento debe ser distinto del destino");
-		}
 		if(origen == null || destino == null ) {
 			throw new IllegalArgumentException("Para construir el escaque movimiento se debe conocer el origen y el destino.");
+		}
+		if(origen.equals(destino)) {
+			throw new IllegalArgumentException("El origen de un movimiento debe ser distinto del destino");
 		}
 	}
 	
