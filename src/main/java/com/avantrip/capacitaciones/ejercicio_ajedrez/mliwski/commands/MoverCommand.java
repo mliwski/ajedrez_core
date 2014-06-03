@@ -11,19 +11,22 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Color;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Trebejo;
 
 public class MoverCommand extends Command {
-	private static Tablero tablero = Tablero.getInstance();
-	
+	private Tablero tablero;
 	private Movimiento movimiento;
 	private Trebejo trebejo;
 
-	public MoverCommand(Escaque origen, Escaque destino) {
-		checkArgumentsPreconditions(origen, destino);
+	public MoverCommand(Tablero tablero, Escaque origen, Escaque destino) {
+		checkArgumentsPreconditions(tablero, origen, destino);
 		checkTrebejoEnOrigenPrecondition(origen);
 		
 		this.movimiento = new Movimiento(origen,destino);
+		this.tablero = tablero;
 	}
 	
-	private void checkArgumentsPreconditions(Escaque origen, Escaque destino) {
+	private void checkArgumentsPreconditions(Tablero tablero, Escaque origen, Escaque destino) {
+		if(tablero == null) {
+			throw new IllegalArgumentException("Para mover se necesita conocer el tablero");
+		}
 		if(origen == null || destino == null) {
 			throw new IllegalArgumentException("Para mover se necesitan conocer el origen y el destino");
 		}
@@ -51,7 +54,7 @@ public class MoverCommand extends Command {
 		// TODO: Implementar el jaque evaluator para rollback de mi rey
 		Color color = trebejo.getColor();
 		Color colorContrincante = color.getContrincante();
-		Escaque rey = tablero.getEscaqueRey(color);
+		Escaque rey = tablero.getEscaqueDelRey(color);
 		if(tablero.isEscaqueAmenazadoPorColor(rey, colorContrincante)){
 			tablero.rollback();
 		}

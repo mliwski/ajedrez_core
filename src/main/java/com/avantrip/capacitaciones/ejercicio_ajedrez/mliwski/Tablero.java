@@ -1,6 +1,8 @@
 package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski;
 
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.exceptions.MovimientoIlegalException;
+import java.util.HashMap;
+import java.util.Map;
+
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Alfil;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Caballo;
@@ -11,25 +13,23 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Rey;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Torre;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Trebejo;
 import com.google.common.collect.HashBiMap;
+import com.google.common.collect.ImmutableBiMap;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 
 public class Tablero {
 	private HashBiMap<Escaque, Trebejo> escaques;
 	private Multimap<Color, Trebejo> trebejosComidos;
 	
-	//TODO: Agregar pila para que contemple el rollback
+	private Map<Color, Rey> reyes;
 	
-	private static Tablero instance;
-	
-	private Tablero() {
+	public Tablero() {
 		escaques = HashBiMap.create();
-	}
-
-	//TODO: Revisar costo y el problema de no poder llamarlo en el constructor por el singleton
-	//TODO: Crear un chain para hacerlo mas prolijo
-	public void inicializar() {
-		escaques = HashBiMap.create();
+		//TODO: Ver como hacerlo sin mapa ... son solo 2
+		reyes = new HashMap<Color, Rey>(2);
 		
+		//TODO: Crear algo para hacerlo mas prolijo
 		posicionarTorres(Color.Blanco);
 		posicionarCaballos(Color.Blanco);
 		posicionarAlfiles(Color.Blanco);
@@ -41,9 +41,8 @@ public class Tablero {
 		posicionarAlfiles(Color.Negro);
 		posicionarReinaRey(Color.Negro);
 		posicionarPeones(Color.Negro);
-
 	}
-	
+
 	private void posicionarTorres(Color color) {
 		Integer numero = color.equals(Color.Blanco) ? 1 : 8;
 		Character letra = 'a';
@@ -85,7 +84,9 @@ public class Tablero {
 		
 		letra = (char)((int)letra + 1);
 		escaque = new Escaque(letra, numero);
-		escaques.put(escaque, new Rey(color));
+		Rey rey = new Rey(color);
+		escaques.put(escaque, rey);
+		reyes.put(color, rey);
 	}
 
 	private void posicionarPeones(Color color) {
@@ -98,21 +99,14 @@ public class Tablero {
 			letra = (char)((int)letra + 1);
 		}
 	}
-	
-	synchronized public static Tablero getInstance() {
-		if(instance == null) {
-			instance = new Tablero();
-		}
-		return instance;
-	}
 
 	public Trebejo getTrebejo(Escaque escaque) {
 		return escaques.get(escaque);
 	}
 	
 	//TODO: Eliminar o refactorear o algo
-	public Escaque getEscaqueRey(Color color) {
-		Rey rey = new Rey(color);
+	public Escaque getEscaqueDelRey(Color color) {
+		Rey rey = reyes.get(color);
 		return escaques.inverse().get(rey);
 	}
 
@@ -155,8 +149,14 @@ public class Tablero {
 		// TODO Auto-generated method stub
 		
 	}
-//	
-//	public TableroSnapshot getSnapshot() {
-//		return null;
-//	}
+	
+	public TableroSnapshot getSnapshot() {
+		HashBiMap<Escaque, Trebejo> copyOfEscaques = Maps.(escaques);
+		Multimap<Color, Trebejo> copyOfCapturas = ImmutableMultimap.copyOf(trebejosComidos);
+		Map<Color, Rey> copeyes = ImmutableMap.copyOf(reyes);
+		new TableroSnapshot(copyOfEscaques, trebejosComidos, reyes);
+
+		
+		return null;
+	}
 }
