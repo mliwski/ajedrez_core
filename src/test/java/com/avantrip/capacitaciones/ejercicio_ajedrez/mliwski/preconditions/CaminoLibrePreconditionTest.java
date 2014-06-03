@@ -11,55 +11,54 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Escaque;
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Tablero;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.TableroSnapshot;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.exceptions.MovimientoIlegalException;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Trebejo;
 
 public class CaminoLibrePreconditionTest {
 
-	private Tablero unTablero;
-	private Movimiento unMovimiento;
+	private TableroSnapshot tableroSnapshot;
+	private Movimiento movimiento;
 	private List<Escaque> camino;
-	private Trebejo unTrebejo;
+	private Trebejo trebejo;
 	private MovimientoPrecondition caminoLibrePrecondition;
 
 	@Before
 	public void beforeEveryTest() {
-		unTablero = mock(Tablero.class);
-		unMovimiento = mock(Movimiento.class);
+		tableroSnapshot = mock(TableroSnapshot.class);
+		movimiento = mock(Movimiento.class);
 		
 		Escaque escaque_1 = mock(Escaque.class);
 		Escaque escaque_2 = mock(Escaque.class);
 		Escaque escaque_3 = mock(Escaque.class);
 		camino = Arrays.asList(escaque_1, escaque_2, escaque_3);
 		
-		unTrebejo = mock(Trebejo.class);
+		trebejo = mock(Trebejo.class);
 
-		when(unMovimiento.getCamino()).thenReturn(camino);
+		when(movimiento.getCamino()).thenReturn(camino);
 		
 		caminoLibrePrecondition = new CaminoLibrePrecondition();
-		caminoLibrePrecondition.setTablero(unTablero);
 	}
 	
 	@Test(expected=MovimientoIlegalException.class)
 	public void shouldThrowsMovimientoIlegalException() {
 		Escaque escaque_2 = camino.get(1);
-		when(unTablero.getTrebejo(escaque_2)).thenReturn(unTrebejo);
+		when(tableroSnapshot.getTrebejo(escaque_2)).thenReturn(trebejo);
 		
-		caminoLibrePrecondition.check(unMovimiento);
+		caminoLibrePrecondition.check(tableroSnapshot, movimiento);
 	}
 	
 	@Test
 	public void shouldNotThrowsExceptionBecauseCaminoLibre() {
-		caminoLibrePrecondition.check(unMovimiento);
+		caminoLibrePrecondition.check(tableroSnapshot, movimiento);
 	}
 	
 	@Test
 	public void shouldNotThrowsExceptionBecauseEmptyCamino() {
-		when(unMovimiento.getCamino()).thenReturn(Collections.<Escaque>emptyList());
+		when(movimiento.getCamino()).thenReturn(Collections.<Escaque>emptyList());
 		
-		caminoLibrePrecondition.check(unMovimiento);
+		caminoLibrePrecondition.check(tableroSnapshot, movimiento);
 	}
 
 }

@@ -151,10 +151,10 @@ public class Tablero {
 	}
 	
 	public TableroSnapshot getSnapshot() {
-		HashBiMap<Escaque, Trebejo> copyOfEscaques = Maps.(escaques);
-		Multimap<Color, Trebejo> copyOfCapturas = ImmutableMultimap.copyOf(trebejosComidos);
-		Map<Color, Rey> copeyes = ImmutableMap.copyOf(reyes);
-		new TableroSnapshot(copyOfEscaques, trebejosComidos, reyes);
+//		HashBiMap<Escaque, Trebejo> copyOfEscaques = Maps.(escaques);
+//		Multimap<Color, Trebejo> copyOfCapturas = ImmutableMultimap.copyOf(trebejosComidos);
+//		Map<Color, Rey> copeyes = ImmutableMap.copyOf(reyes);
+//		new TableroSnapshot(copyOfEscaques, trebejosComidos, reyes);
 
 		
 		return null;

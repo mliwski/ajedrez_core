@@ -4,10 +4,10 @@ import java.util.List;
 
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Escaque;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Tablero;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.TableroSnapshot;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.capturas.CapturaStrategy;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.notifications.Notification;
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Color;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Trebejo;
 
 public class MoverCommand extends Command {
@@ -42,7 +42,9 @@ public class MoverCommand extends Command {
 	@Override
 	public List<Notification> ejecutar() {
 		List<Notification> notifications = null;
-		trebejo.checkPreconditions(movimiento);
+		
+		TableroSnapshot tableroSnapshot = tablero.getSnapshot();		
+		trebejo.checkPreconditions(tableroSnapshot, movimiento);
 		
 		//TODO: Implementar el notifications evaluator, debe evaluar por:
 		// - Pieza comida Basarlo en el capturaStrategy del Trebejo
@@ -50,17 +52,6 @@ public class MoverCommand extends Command {
 		Trebejo trebejoCapturado = capturaStrategy.getTrebejoCapturado(movimiento);
 		
 		tablero.moverTrebejo(movimiento);
-		
-		// TODO: Implementar el jaque evaluator para rollback de mi rey
-		Color color = trebejo.getColor();
-		Color colorContrincante = color.getContrincante();
-		Escaque rey = tablero.getEscaqueDelRey(color);
-		if(tablero.isEscaqueAmenazadoPorColor(rey, colorContrincante)){
-			tablero.rollback();
-		}
-
-		
-		
 		trebejo.addMovimiento(movimiento);
 
 		//TODO: Implementar el notifications evaluator, debe evaluar por:

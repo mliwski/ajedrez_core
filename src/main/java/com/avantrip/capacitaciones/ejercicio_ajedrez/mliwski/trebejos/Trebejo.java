@@ -3,6 +3,7 @@ package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.TableroSnapshot;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.capturas.CapturaStrategy;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.MovimientoPrecondition;
@@ -22,10 +23,10 @@ public abstract class Trebejo {
 		movimientos.add(movimiento);
 	}
 	
-	public final void checkPreconditions(Movimiento movimiento) {
+	public final void checkPreconditions(TableroSnapshot tableroSnapshot, Movimiento movimiento) {
 		List<MovimientoPrecondition> movimientoPreconditions = getMovimientoPreconditions();
 		for (MovimientoPrecondition precondition : movimientoPreconditions) {
-			precondition.check(movimiento);
+			precondition.check(tableroSnapshot, movimiento);
 		}
 	}; 
 	protected abstract List<MovimientoPrecondition> getMovimientoPreconditions();
