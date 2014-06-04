@@ -35,11 +35,11 @@ public abstract class Trebejo {
 		return capturaStrategy;
 	}
 	
-	public final Color getColor() {
+	public Color getColor() {
 		return color;
 	}
 
-	public final boolean isTrebejoMovido() {
+	public boolean isTrebejoMovido() {
 		return movimientos.isEmpty();
 	}
 	

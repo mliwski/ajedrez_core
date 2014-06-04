@@ -13,58 +13,48 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimie
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Color;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Trebejo;
 
-public class DestinoOcupablePreconditionTest {
+public class ReySeguroPreconditionTest {
 
 	private TableroSnapshot tableroSnapshot;
 	private Movimiento movimiento;
+	private Trebejo trebejo;
+	private MovimientoPrecondition reySeguroPrecondition;
 	private Escaque escaque_1;
-	private Trebejo trebejo_1;
 	private Escaque escaque_2;
-	private Trebejo trebejo_2;
-
-	private MovimientoPrecondition destinoOcupablePrecondition;
-
+	private Color color = Color.Blanco;
+	
 	@Before
 	public void beforeEveryTest() {
 		tableroSnapshot = mock(TableroSnapshot.class);
 		movimiento = mock(Movimiento.class);
 		
 		escaque_1 = mock(Escaque.class);
-		trebejo_1 = mock(Trebejo.class);
-		when(trebejo_1.getColor()).thenReturn(Color.Blanco);
-		when(tableroSnapshot.getTrebejo(escaque_1)).thenReturn(trebejo_1);
+		trebejo = mock(Trebejo.class);
+		when(trebejo.getColor()).thenReturn(color);
+		when(tableroSnapshot.getTrebejo(escaque_1)).thenReturn(trebejo);
 
 		escaque_2 = mock(Escaque.class);
-		trebejo_2 = mock(Trebejo.class);
 		
 		when(movimiento.getOrigen()).thenReturn(escaque_1);
 		when(movimiento.getDestino()).thenReturn(escaque_2);
 		
-		destinoOcupablePrecondition = new DestinoOcupablePrecondition();
+		when(tableroSnapshot.getEscaqueDelRey(color)).thenReturn(escaque_2);
+		
+		
+		reySeguroPrecondition = new ReySeguroPrecondition();
 	}
 	
 	@Test(expected=MovimientoIlegalException.class)
 	public void shouldThrowsMovimientoIlegalException() {
-		Color colorTrebejo_1 = trebejo_1.getColor();
-		when(tableroSnapshot.getTrebejo(escaque_2)).thenReturn(trebejo_2);
-		when(trebejo_2.getColor()).thenReturn(colorTrebejo_1);
+		when(tableroSnapshot.isEscaqueAmenazadoPorColor(escaque_2, color.getContrincante())).thenReturn(true);
 		
-		destinoOcupablePrecondition.check(tableroSnapshot, movimiento);
+		reySeguroPrecondition.check(tableroSnapshot, movimiento);
 	}
 	
 	@Test
-	public void shouldNotThrowsExceptionBecauseDestinoOcupadoPorContrincante() {
-		Color colorTrebejo_1 = trebejo_1.getColor();
-		when(tableroSnapshot.getTrebejo(escaque_2)).thenReturn(trebejo_2);
-		when(trebejo_2.getColor()).thenReturn(colorTrebejo_1.getContrincante());
-		
-		destinoOcupablePrecondition.check(tableroSnapshot, movimiento);
-	}
-	
-	@Test
-	public void shouldNotThrowsExceptionBecauseDestinoLibre() {
-		when(tableroSnapshot.getTrebejo(escaque_2)).thenReturn(null);
-		
-		destinoOcupablePrecondition.check(tableroSnapshot, movimiento);
+	public void shouldNotThrowsExceptionBecauseCaminoLibre() {
+		when(tableroSnapshot.isEscaqueAmenazadoPorColor(escaque_2, color.getContrincante())).thenReturn(false);
+
+		reySeguroPrecondition.check(tableroSnapshot, movimiento);
 	}
 }

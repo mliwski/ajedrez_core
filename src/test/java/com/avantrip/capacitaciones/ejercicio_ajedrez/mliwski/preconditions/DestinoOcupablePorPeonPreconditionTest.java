@@ -11,14 +11,18 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.TableroSnapshot;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.exceptions.MovimientoIlegalException;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Color;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Peon;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Trebejo;
 
-public class DestinoOcupablePreconditionTest {
+public class DestinoOcupablePorPeonPreconditionTest {
 
 	private TableroSnapshot tableroSnapshot;
 	private Movimiento movimiento;
+	
 	private Escaque escaque_1;
-	private Trebejo trebejo_1;
+	private Color color_peon = Color.Blanco;
+	private Trebejo trebejo_1 = new Peon(color_peon);
+	
 	private Escaque escaque_2;
 	private Trebejo trebejo_2;
 
@@ -40,7 +44,7 @@ public class DestinoOcupablePreconditionTest {
 		when(movimiento.getOrigen()).thenReturn(escaque_1);
 		when(movimiento.getDestino()).thenReturn(escaque_2);
 		
-		destinoOcupablePrecondition = new DestinoOcupablePrecondition();
+		destinoOcupablePrecondition = new DestinoOcupablePorPeonPrecondition();
 	}
 	
 	@Test(expected=MovimientoIlegalException.class)

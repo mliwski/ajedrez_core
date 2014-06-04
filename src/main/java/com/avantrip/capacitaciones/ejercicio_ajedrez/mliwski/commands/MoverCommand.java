@@ -49,7 +49,7 @@ public class MoverCommand extends Command {
 		//TODO: Implementar el notifications evaluator, debe evaluar por:
 		// - Pieza comida Basarlo en el capturaStrategy del Trebejo
 		CapturaStrategy capturaStrategy = trebejo.getCapturaStrategy();
-		Trebejo trebejoCapturado = capturaStrategy.getTrebejoCapturado(movimiento);
+		Trebejo trebejoCapturado = capturaStrategy.getTrebejoCapturado(tableroSnapshot, movimiento);
 		
 		tablero.moverTrebejo(movimiento);
 		trebejo.addMovimiento(movimiento);
