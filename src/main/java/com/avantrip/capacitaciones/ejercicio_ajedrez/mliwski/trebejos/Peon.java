@@ -6,11 +6,11 @@ import java.util.List;
 
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.capturas.CapturaStrategy;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.TipoMovimiento;
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.CantidadMaximaPrecondition;
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.DestinoOcupablePorPeonPrecondition;
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.MovimientoPrecondition;
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.ReySeguroPrecondition;
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.TipoMovimientoCorrectoPrecondition;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movimiento.CantidadMaximaPrecondition;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movimiento.DestinoOcupablePeonPrecondition;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movimiento.MovimientoPrecondition;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movimiento.ReySeguroPrecondition;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movimiento.TipoMovimientoCorrectoPrecondition;
 
 public class Peon extends Trebejo {
 	private static final TipoMovimiento TIPO_MOVIMIENTO_1 = TipoMovimiento.Vertical;
@@ -31,7 +31,7 @@ public class Peon extends Trebejo {
 		// Soportar Peon al paso
 		preconditions.add(new TipoMovimientoCorrectoPrecondition(TIPOS_ESPERADOS));
 		preconditions.add(new CantidadMaximaPrecondition(CANTIDAD_MAXIMA_MOVIMIENTOS));
-		preconditions.add(new DestinoOcupablePorPeonPrecondition());
+		preconditions.add(new DestinoOcupablePeonPrecondition());
 		preconditions.add(new ReySeguroPrecondition());
 		
 	}

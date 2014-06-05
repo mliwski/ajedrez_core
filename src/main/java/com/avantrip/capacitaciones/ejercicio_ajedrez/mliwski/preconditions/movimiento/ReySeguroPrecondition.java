@@ -1,4 +1,4 @@
-package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions;
+package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movimiento;
 
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Escaque;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.TableroSnapshot;
@@ -15,7 +15,9 @@ public class ReySeguroPrecondition extends MovimientoPrecondition {
 		Trebejo trebejo = tableroSnapshot.getTrebejo(origen);
 		Color color = trebejo.getColor();
 		Color colorContrincante = color.getContrincante();
+		
 		Escaque escaqueRey = tableroSnapshot.getEscaqueDelRey(color);
+		
 		if(tableroSnapshot.isEscaqueAmenazadoPorColor(escaqueRey, colorContrincante)){
 			throw new ReyAmenazadoException("El movimiento que se intenta realizar deja al rey en jaque");
 		}

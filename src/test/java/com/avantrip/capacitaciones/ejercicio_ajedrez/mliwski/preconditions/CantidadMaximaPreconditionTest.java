@@ -9,6 +9,8 @@ import org.junit.Test;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.TableroSnapshot;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.exceptions.MovimientoIlegalException;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movimiento.CantidadMaximaPrecondition;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movimiento.MovimientoPrecondition;
 
 public class CantidadMaximaPreconditionTest {
 

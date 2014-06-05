@@ -1,4 +1,4 @@
-package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions;
+package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movimiento;
 
 import java.util.List;
 
