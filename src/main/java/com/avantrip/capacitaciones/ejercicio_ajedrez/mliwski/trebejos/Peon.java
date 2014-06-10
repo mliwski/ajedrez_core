@@ -11,11 +11,10 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movim
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movimiento.TipoMovimientoCorrectoPrecondition;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movimiento.peon.PeonCantidadPrecondition;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movimiento.peon.PeonDestinoOcupablePrecondition;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movimiento.peon.PeonDireccionAdelantePrecondition;
 
 public class Peon extends Trebejo {
-	private static final TipoMovimiento TIPO_MOVIMIENTO_1 = TipoMovimiento.Vertical;
-	private static final TipoMovimiento TIPO_MOVIMIENTO_2 = TipoMovimiento.Diagonal;
-	private static final List<TipoMovimiento> TIPOS_ESPERADOS = Arrays.asList(TIPO_MOVIMIENTO_1, TIPO_MOVIMIENTO_2);
+	private static final List<TipoMovimiento> TIPOS_ESPERADOS = Arrays.asList(TipoMovimiento.Vertical, TipoMovimiento.Diagonal);
 	
 	//TODO: Pasarla a estatica e inicializar en bloque estatico (no hay riesgo de zona critica en este punto)
 	private List<MovimientoPrecondition> preconditions = new ArrayList<MovimientoPrecondition>();
@@ -24,11 +23,11 @@ public class Peon extends Trebejo {
 		super(color);
 
 		//TODO: Terminar de implementar
-		// Solo hacia adelante
 		// Soportar Peon al paso
 		preconditions.add(new TipoMovimientoCorrectoPrecondition(TIPOS_ESPERADOS));
 		preconditions.add(new PeonCantidadPrecondition());
 		preconditions.add(new PeonDestinoOcupablePrecondition());
+		preconditions.add(new PeonDireccionAdelantePrecondition());
 		preconditions.add(new ReySeguroPrecondition());
 		
 	}

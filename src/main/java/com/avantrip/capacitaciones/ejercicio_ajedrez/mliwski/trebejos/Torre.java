@@ -12,9 +12,7 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movim
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movimiento.TipoMovimientoCorrectoPrecondition;
 
 public class Torre extends Trebejo {
-	private static final TipoMovimiento TIPO_MOVIMIENTO_1 = TipoMovimiento.Vertical;
-	private static final TipoMovimiento TIPO_MOVIMIENTO_2 = TipoMovimiento.Horizontal;
-	private static final List<TipoMovimiento> TIPOS_ESPERADOS = Arrays.asList(TIPO_MOVIMIENTO_1, TIPO_MOVIMIENTO_2);
+	private static final List<TipoMovimiento> TIPOS_ESPERADOS = Arrays.asList(TipoMovimiento.Vertical, TipoMovimiento.Horizontal);
 	
 	//TODO: Pasarla a estatica e inicializar en bloque estatico (no hay riesgo de zona critica en este punto)
 	private List<MovimientoPrecondition> preconditions = new ArrayList<MovimientoPrecondition>();
