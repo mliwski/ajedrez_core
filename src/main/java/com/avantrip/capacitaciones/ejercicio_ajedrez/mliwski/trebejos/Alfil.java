@@ -13,21 +13,24 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movim
 
 public class Alfil extends Trebejo {
 	private static final List<TipoMovimiento> TIPOS_ESPERADOS = Arrays.asList(TipoMovimiento.Diagonal);
-	
-	//TODO: Resolver como hacer para no tener que copiar y pegar en cada trebejo y que ademas sean de la clase
-	private List<MovimientoPrecondition> preconditions = new ArrayList<MovimientoPrecondition>();
-	
+	private static List<MovimientoPrecondition> preconditions;
+
 	public Alfil(Color color) {
 		super(color);
-		
-		preconditions.add(new TipoMovimientoCorrectoPrecondition(TIPOS_ESPERADOS));
-		preconditions.add(new CaminoLibrePrecondition());
-		preconditions.add(new DestinoOcupablePrecondition());
-		preconditions.add(new ReySeguroPrecondition());
+
+		synchronized (this) {
+			if (preconditions == null) {
+				preconditions = new ArrayList<MovimientoPrecondition>();
+				preconditions.add(new TipoMovimientoCorrectoPrecondition(TIPOS_ESPERADOS));
+				preconditions.add(new CaminoLibrePrecondition());
+				preconditions.add(new DestinoOcupablePrecondition());
+				preconditions.add(new ReySeguroPrecondition());
+			}
+		}
 	}
 
 	@Override
 	protected List<MovimientoPrecondition> getMovimientoPreconditions() {
-		return this.preconditions;
+		return Alfil.preconditions;
 	}
 }
