@@ -1,4 +1,4 @@
-package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movimiento;
+package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movimiento.peon;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -11,13 +11,14 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.TableroSnapshot;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.exceptions.MovimientoIlegalException;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.TipoMovimiento;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movimiento.MovimientoPrecondition;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movimiento.peon.PeonDestinoOcupablePrecondition;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Color;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Peon;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Rey;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Trebejo;
 
-public class PeonPreconditionTest {
+public class PeonDestinoOcupablePreconditionTest {
 
 	private TableroSnapshot tableroSnapshot;
 	private Movimiento movimiento;
@@ -51,8 +52,7 @@ public class PeonPreconditionTest {
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void shouldThrowsIllegalArgumentBecauseNotPeon() {
-		Rey reyBlanco = new Rey(Color.Blanco);
-		when(tableroSnapshot.getTrebejo(origen)).thenReturn(reyBlanco);
+		when(tableroSnapshot.getTrebejo(origen)).thenReturn(new Rey(Color.Blanco));
 		destinoOcupablePrecondition.check(tableroSnapshot, movimiento);
 	}
 	

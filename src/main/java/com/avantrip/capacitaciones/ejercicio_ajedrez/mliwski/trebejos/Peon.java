@@ -22,14 +22,12 @@ public class Peon extends Trebejo {
 	public Peon(Color color) {
 		super(color);
 
-		//TODO: Terminar de implementar
-		// Soportar Peon al paso
+		//TODO: Soportar peon al paso
 		preconditions.add(new TipoMovimientoCorrectoPrecondition(TIPOS_ESPERADOS));
 		preconditions.add(new PeonCantidadPrecondition());
 		preconditions.add(new PeonDestinoOcupablePrecondition());
 		preconditions.add(new PeonDireccionAdelantePrecondition());
 		preconditions.add(new ReySeguroPrecondition());
-		
 	}
 
 	@Override
