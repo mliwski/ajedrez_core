@@ -21,89 +21,84 @@ public class PeonCantidadPreconditionTest {
 	private TableroSnapshot tableroSnapshot;
 	private Movimiento movimiento;
 	
-	private Escaque escaque_1;
-	private Color color_peon = Color.Blanco;
-	private Peon trebejo_1;
+	private Escaque origen;
+	private Color colorOrigen = Color.Blanco;
+	private Peon trebejoOrigen;
 	
-	private Escaque escaque_2;
-	private Trebejo trebejo_2;
+	private Escaque destino;
+	private Trebejo trebejoDestino;
 
 	private MovimientoPrecondition cantidadPrecondition;
 
 	@Before
 	public void beforeEveryTest() {
-		trebejo_1 = new Peon(color_peon);
+		trebejoOrigen = new Peon(colorOrigen);
 		tableroSnapshot = mock(TableroSnapshot.class);
 		movimiento = mock(Movimiento.class);
 		
-		escaque_1 = mock(Escaque.class);
-		when(tableroSnapshot.getTrebejo(escaque_1)).thenReturn(trebejo_1);
+		origen = mock(Escaque.class);
+		when(tableroSnapshot.getTrebejo(origen)).thenReturn(trebejoOrigen);
 
-		escaque_2 = mock(Escaque.class);
-		trebejo_2 = mock(Trebejo.class);
+		destino = mock(Escaque.class);
+		trebejoDestino = mock(Trebejo.class);
 		
-		when(movimiento.getOrigen()).thenReturn(escaque_1);
-		when(movimiento.getDestino()).thenReturn(escaque_2);
+		when(movimiento.getOrigen()).thenReturn(origen);
+		when(movimiento.getDestino()).thenReturn(destino);
 		
 		cantidadPrecondition = new PeonCantidadPrecondition();
 	}
 
 	@Test(expected=MovimientoIlegalException.class)
 	public void shouldThrowsMovimientoIlegalBecauseIllegalCantidad() {
-		trebejo_1 = spy(new Peon(color_peon));
-		Color colorTrebejo_1 = trebejo_1.getColor();
-		when(tableroSnapshot.getTrebejo(escaque_2)).thenReturn(trebejo_2);
-		when(trebejo_2.getColor()).thenReturn(colorTrebejo_1);
+		trebejoOrigen = spy(new Peon(colorOrigen));
+		when(tableroSnapshot.getTrebejo(destino)).thenReturn(trebejoDestino);
+		when(trebejoDestino.getColor()).thenReturn(colorOrigen);
 		when(movimiento.getCantidad()).thenReturn(2);
-		when(trebejo_1.isTrebejoMovido()).thenReturn(true);
+		when(trebejoOrigen.isTrebejoMovido()).thenReturn(true);
 		
 		cantidadPrecondition.check(tableroSnapshot, movimiento);
 	}
 	
 	@Test(expected=MovimientoIlegalException.class)
 	public void shouldThrowsMovimientoIlegalBecauseIllegalCantidadOnFirst() {
-		trebejo_1 = spy(new Peon(color_peon));
-		Color colorTrebejo_1 = trebejo_1.getColor();
-		when(tableroSnapshot.getTrebejo(escaque_2)).thenReturn(trebejo_2);
-		when(trebejo_2.getColor()).thenReturn(colorTrebejo_1);
+		trebejoOrigen = spy(new Peon(colorOrigen));
+		when(tableroSnapshot.getTrebejo(destino)).thenReturn(trebejoDestino);
+		when(trebejoDestino.getColor()).thenReturn(colorOrigen);
 		when(movimiento.getCantidad()).thenReturn(3);
-		when(trebejo_1.isTrebejoMovido()).thenReturn(false);
+		when(trebejoOrigen.isTrebejoMovido()).thenReturn(false);
 		
 		cantidadPrecondition.check(tableroSnapshot, movimiento);
 	}
 	
 	@Test
 	public void shouldNotThrowsBecauseTwoMovesOnFirst() {
-		trebejo_1 = spy(new Peon(color_peon));
-		Color colorTrebejo_1 = trebejo_1.getColor();
-		when(tableroSnapshot.getTrebejo(escaque_2)).thenReturn(trebejo_2);
-		when(tableroSnapshot.getTrebejo(escaque_1)).thenReturn(trebejo_1);
-		when(trebejo_2.getColor()).thenReturn(colorTrebejo_1);
+		trebejoOrigen = spy(new Peon(colorOrigen));
+		when(tableroSnapshot.getTrebejo(destino)).thenReturn(trebejoDestino);
+		when(tableroSnapshot.getTrebejo(origen)).thenReturn(trebejoOrigen);
+		when(trebejoDestino.getColor()).thenReturn(colorOrigen);
 		when(movimiento.getCantidad()).thenReturn(2);
-		when(trebejo_1.isTrebejoMovido()).thenReturn(false);
+		when(trebejoOrigen.isTrebejoMovido()).thenReturn(false);
 		cantidadPrecondition.check(tableroSnapshot, movimiento);
 	}
 	
 	@Test
 	public void shouldNotThrowsBecauseOneMoveOnFirst() {
-		trebejo_1 = spy(new Peon(color_peon));
-		Color colorTrebejo_1 = trebejo_1.getColor();
-		when(tableroSnapshot.getTrebejo(escaque_2)).thenReturn(trebejo_2);
-		when(trebejo_2.getColor()).thenReturn(colorTrebejo_1);
+		trebejoOrigen = spy(new Peon(colorOrigen));
+		when(tableroSnapshot.getTrebejo(destino)).thenReturn(trebejoDestino);
+		when(trebejoDestino.getColor()).thenReturn(colorOrigen);
 		when(movimiento.getCantidad()).thenReturn(1);
-		when(trebejo_1.isTrebejoMovido()).thenReturn(false);
+		when(trebejoOrigen.isTrebejoMovido()).thenReturn(false);
 		
 		cantidadPrecondition.check(tableroSnapshot, movimiento);
 	}
 	
 	@Test
 	public void shouldNotThrowsBecauseOneMoveOnMoved() {
-		trebejo_1 = spy(new Peon(color_peon));
-		Color colorTrebejo_1 = trebejo_1.getColor();
-		when(tableroSnapshot.getTrebejo(escaque_2)).thenReturn(trebejo_2);
-		when(trebejo_2.getColor()).thenReturn(colorTrebejo_1);
+		trebejoOrigen = spy(new Peon(colorOrigen));
+		when(tableroSnapshot.getTrebejo(destino)).thenReturn(trebejoDestino);
+		when(trebejoDestino.getColor()).thenReturn(colorOrigen);
 		when(movimiento.getCantidad()).thenReturn(1);
-		when(trebejo_1.isTrebejoMovido()).thenReturn(true);
+		when(trebejoOrigen.isTrebejoMovido()).thenReturn(true);
 		
 		cantidadPrecondition.check(tableroSnapshot, movimiento);
 	}

@@ -19,10 +19,10 @@ public class DestinoOcupablePreconditionTest {
 
 	private TableroSnapshot tableroSnapshot;
 	private Movimiento movimiento;
-	private Escaque escaque_1;
-	private Trebejo trebejo_1;
-	private Escaque escaque_2;
-	private Trebejo trebejo_2;
+	private Escaque origen;
+	private Trebejo trebejoOrigen;
+	private Escaque destino;
+	private Trebejo trebejoDestino;
 
 	private MovimientoPrecondition destinoOcupablePrecondition;
 
@@ -31,41 +31,41 @@ public class DestinoOcupablePreconditionTest {
 		tableroSnapshot = mock(TableroSnapshot.class);
 		movimiento = mock(Movimiento.class);
 		
-		escaque_1 = mock(Escaque.class);
-		trebejo_1 = mock(Trebejo.class);
-		when(trebejo_1.getColor()).thenReturn(Color.Blanco);
-		when(tableroSnapshot.getTrebejo(escaque_1)).thenReturn(trebejo_1);
+		origen = mock(Escaque.class);
+		trebejoOrigen = mock(Trebejo.class);
+		when(trebejoOrigen.getColor()).thenReturn(Color.Blanco);
+		when(tableroSnapshot.getTrebejo(origen)).thenReturn(trebejoOrigen);
 
-		escaque_2 = mock(Escaque.class);
-		trebejo_2 = mock(Trebejo.class);
+		destino = mock(Escaque.class);
+		trebejoDestino = mock(Trebejo.class);
 		
-		when(movimiento.getOrigen()).thenReturn(escaque_1);
-		when(movimiento.getDestino()).thenReturn(escaque_2);
+		when(movimiento.getOrigen()).thenReturn(origen);
+		when(movimiento.getDestino()).thenReturn(destino);
 		
 		destinoOcupablePrecondition = new DestinoOcupablePrecondition();
 	}
 	
 	@Test(expected=MovimientoIlegalException.class)
 	public void shouldThrowsMovimientoIlegalException() {
-		Color colorTrebejo_1 = trebejo_1.getColor();
-		when(tableroSnapshot.getTrebejo(escaque_2)).thenReturn(trebejo_2);
-		when(trebejo_2.getColor()).thenReturn(colorTrebejo_1);
+		Color colorTrebejoOrigen = trebejoOrigen.getColor();
+		when(tableroSnapshot.getTrebejo(destino)).thenReturn(trebejoDestino);
+		when(trebejoDestino.getColor()).thenReturn(colorTrebejoOrigen);
 		
 		destinoOcupablePrecondition.check(tableroSnapshot, movimiento);
 	}
 	
 	@Test
 	public void shouldNotThrowsExceptionBecauseDestinoOcupadoPorContrincante() {
-		Color colorTrebejo_1 = trebejo_1.getColor();
-		when(tableroSnapshot.getTrebejo(escaque_2)).thenReturn(trebejo_2);
-		when(trebejo_2.getColor()).thenReturn(colorTrebejo_1.getContrincante());
+		Color colorOrigen = trebejoOrigen.getColor();
+		when(tableroSnapshot.getTrebejo(destino)).thenReturn(trebejoDestino);
+		when(trebejoDestino.getColor()).thenReturn(colorOrigen.getContrincante());
 		
 		destinoOcupablePrecondition.check(tableroSnapshot, movimiento);
 	}
 	
 	@Test
 	public void shouldNotThrowsExceptionBecauseDestinoLibre() {
-		when(tableroSnapshot.getTrebejo(escaque_2)).thenReturn(null);
+		when(tableroSnapshot.getTrebejo(destino)).thenReturn(null);
 		
 		destinoOcupablePrecondition.check(tableroSnapshot, movimiento);
 	}

@@ -19,28 +19,31 @@ public class ReySeguroPreconditionTest {
 
 	private TableroSnapshot tableroSnapshot;
 	private Movimiento movimiento;
-	private Trebejo trebejo;
+	
+	private Escaque origen;
+	private Trebejo trebejoOrigen;
+	private Color colorOrigen = Color.Blanco;
+	
+	private Escaque destino;
+	
 	private MovimientoPrecondition reySeguroPrecondition;
-	private Escaque escaque_1;
-	private Escaque escaque_2;
-	private Color color = Color.Blanco;
 	
 	@Before
 	public void beforeEveryTest() {
 		tableroSnapshot = mock(TableroSnapshot.class);
 		movimiento = mock(Movimiento.class);
 		
-		escaque_1 = mock(Escaque.class);
-		trebejo = mock(Trebejo.class);
-		when(trebejo.getColor()).thenReturn(color);
-		when(tableroSnapshot.getTrebejo(escaque_1)).thenReturn(trebejo);
+		origen = mock(Escaque.class);
+		trebejoOrigen = mock(Trebejo.class);
+		when(trebejoOrigen.getColor()).thenReturn(colorOrigen);
+		when(tableroSnapshot.getTrebejo(origen)).thenReturn(trebejoOrigen);
 
-		escaque_2 = mock(Escaque.class);
+		destino = mock(Escaque.class);
 		
-		when(movimiento.getOrigen()).thenReturn(escaque_1);
-		when(movimiento.getDestino()).thenReturn(escaque_2);
+		when(movimiento.getOrigen()).thenReturn(origen);
+		when(movimiento.getDestino()).thenReturn(destino);
 		
-		when(tableroSnapshot.getEscaqueDelRey(color)).thenReturn(escaque_2);
+		when(tableroSnapshot.getEscaqueDelRey(colorOrigen)).thenReturn(destino);
 		
 		
 		reySeguroPrecondition = new ReySeguroPrecondition();
@@ -48,14 +51,16 @@ public class ReySeguroPreconditionTest {
 	
 	@Test(expected=MovimientoIlegalException.class)
 	public void shouldThrowsMovimientoIlegalException() {
-		when(tableroSnapshot.isEscaqueAmenazadoPorColor(escaque_2, color.getContrincante())).thenReturn(true);
+		Color colorContrincante = colorOrigen.getContrincante();
+		when(tableroSnapshot.isEscaqueAmenazadoPorColor(destino, colorContrincante)).thenReturn(true);
 		
 		reySeguroPrecondition.check(tableroSnapshot, movimiento);
 	}
 	
 	@Test
 	public void shouldNotThrowsExceptionBecauseCaminoLibre() {
-		when(tableroSnapshot.isEscaqueAmenazadoPorColor(escaque_2, color.getContrincante())).thenReturn(false);
+		Color colorContrincante = colorOrigen.getContrincante();
+		when(tableroSnapshot.isEscaqueAmenazadoPorColor(destino, colorContrincante)).thenReturn(false);
 
 		reySeguroPrecondition.check(tableroSnapshot, movimiento);
 	}

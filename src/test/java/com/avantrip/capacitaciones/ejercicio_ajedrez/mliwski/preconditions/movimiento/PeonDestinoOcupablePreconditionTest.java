@@ -22,42 +22,42 @@ public class PeonDestinoOcupablePreconditionTest {
 	private TableroSnapshot tableroSnapshot;
 	private Movimiento movimiento;
 	
-	private Escaque escaque_1;
-	private Color color_peon = Color.Blanco;
-	private Peon trebejo_1;
+	private Escaque origen;
+	private Color colorOrigen = Color.Blanco;
+	private Peon trebejoOrigen;
 	
-	private Escaque escaque_2;
-	private Trebejo trebejo_2;
+	private Escaque destino;
+	private Trebejo trebejoDestino;
 
 	private MovimientoPrecondition destinoOcupablePrecondition;
 
 	@Before
 	public void beforeEveryTest() {
-		trebejo_1 = new Peon(color_peon);
+		trebejoOrigen = new Peon(colorOrigen);
 		tableroSnapshot = mock(TableroSnapshot.class);
 		movimiento = mock(Movimiento.class);
 		
-		escaque_1 = mock(Escaque.class);
-		when(tableroSnapshot.getTrebejo(escaque_1)).thenReturn(trebejo_1);
+		origen = mock(Escaque.class);
+		when(tableroSnapshot.getTrebejo(origen)).thenReturn(trebejoOrigen);
 
-		escaque_2 = mock(Escaque.class);
-		trebejo_2 = mock(Trebejo.class);
+		destino = mock(Escaque.class);
+		trebejoDestino = mock(Trebejo.class);
 		
-		when(movimiento.getOrigen()).thenReturn(escaque_1);
-		when(movimiento.getDestino()).thenReturn(escaque_2);
+		when(movimiento.getOrigen()).thenReturn(origen);
+		when(movimiento.getDestino()).thenReturn(destino);
 		
 		destinoOcupablePrecondition = new PeonDestinoOcupablePrecondition();
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void shouldThrowsIllegalArgumentBecauseNotPeon() {
-		when(tableroSnapshot.getTrebejo(escaque_1)).thenReturn(new Rey(Color.Blanco));
+		when(tableroSnapshot.getTrebejo(origen)).thenReturn(new Rey(Color.Blanco));
 		destinoOcupablePrecondition.check(tableroSnapshot, movimiento);
 	}
 	
 	@Test(expected=MovimientoIlegalException.class)
 	public void shouldThrowsMovimientoIlegalBecauseDiagonalAndDestinoEmpty() {
-		when(tableroSnapshot.getTrebejo(escaque_2)).thenReturn(null);
+		when(tableroSnapshot.getTrebejo(destino)).thenReturn(null);
 		when(movimiento.getTipo()).thenReturn(TipoMovimiento.Diagonal);
 		
 		destinoOcupablePrecondition.check(tableroSnapshot, movimiento);
@@ -65,18 +65,16 @@ public class PeonDestinoOcupablePreconditionTest {
 	
 	@Test(expected=MovimientoIlegalException.class)
 	public void shouldThrowsMovimientoIlegalBecauseDiagonalAndDestinoSameColor() {
-		Color colorTrebejo_1 = trebejo_1.getColor();
-		when(tableroSnapshot.getTrebejo(escaque_2)).thenReturn(trebejo_2);
-		when(trebejo_2.getColor()).thenReturn(colorTrebejo_1);
+		when(tableroSnapshot.getTrebejo(destino)).thenReturn(trebejoDestino);
+		when(trebejoDestino.getColor()).thenReturn(colorOrigen);
 		
 		destinoOcupablePrecondition.check(tableroSnapshot, movimiento);
 	}
 	
 	@Test(expected=MovimientoIlegalException.class)
 	public void shouldThrowsMovimientoIlegalBecauseVerticalAndDestinoNotEmpty() {
-		Color colorTrebejo_1 = trebejo_1.getColor();
-		when(tableroSnapshot.getTrebejo(escaque_2)).thenReturn(trebejo_2);
-		when(trebejo_2.getColor()).thenReturn(colorTrebejo_1.getContrincante());
+		when(tableroSnapshot.getTrebejo(destino)).thenReturn(trebejoDestino);
+		when(trebejoDestino.getColor()).thenReturn(colorOrigen.getContrincante());
 		when(movimiento.getTipo()).thenReturn(TipoMovimiento.Vertical);
 		
 		destinoOcupablePrecondition.check(tableroSnapshot, movimiento);
@@ -84,9 +82,8 @@ public class PeonDestinoOcupablePreconditionTest {
 	
 	@Test
 	public void shouldNotThrowsExceptionBecauseDiagonalAndDestinoContrincante() {
-		Color colorTrebejo_1 = trebejo_1.getColor();
-		when(tableroSnapshot.getTrebejo(escaque_2)).thenReturn(trebejo_2);
-		when(trebejo_2.getColor()).thenReturn(colorTrebejo_1.getContrincante());
+		when(tableroSnapshot.getTrebejo(destino)).thenReturn(trebejoDestino);
+		when(trebejoDestino.getColor()).thenReturn(colorOrigen.getContrincante());
 		when(movimiento.getTipo()).thenReturn(TipoMovimiento.Diagonal);
 		
 		destinoOcupablePrecondition.check(tableroSnapshot, movimiento);
@@ -94,7 +91,7 @@ public class PeonDestinoOcupablePreconditionTest {
 	
 	@Test
 	public void shouldNotThrowsExceptionBecauseVerticalAndDestinoEmpty() {
-		when(tableroSnapshot.getTrebejo(escaque_2)).thenReturn(null);
+		when(tableroSnapshot.getTrebejo(destino)).thenReturn(null);
 		when(movimiento.getTipo()).thenReturn(TipoMovimiento.Vertical);
 		
 		destinoOcupablePrecondition.check(tableroSnapshot, movimiento);
