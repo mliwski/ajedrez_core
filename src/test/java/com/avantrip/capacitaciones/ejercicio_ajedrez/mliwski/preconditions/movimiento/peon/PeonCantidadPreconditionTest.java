@@ -1,7 +1,6 @@
 package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movimiento.peon;
 
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 import org.junit.Before;
@@ -12,7 +11,6 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.TableroSnapshot;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.exceptions.MovimientoIlegalException;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movimiento.MovimientoPrecondition;
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movimiento.peon.PeonCantidadPrecondition;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Color;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Peon;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Trebejo;
@@ -51,55 +49,52 @@ public class PeonCantidadPreconditionTest {
 
 	@Test(expected=MovimientoIlegalException.class)
 	public void shouldThrowsMovimientoIlegalBecauseIllegalCantidad() {
-		trebejoOrigen = spy(new Peon(colorOrigen));
+		Movimiento movimientoAnterior = mock(Movimiento.class);
+		trebejoOrigen.addMovimiento(movimientoAnterior);
+
 		when(tableroSnapshot.getTrebejo(destino)).thenReturn(trebejoDestino);
 		when(trebejoDestino.getColor()).thenReturn(colorOrigen);
 		when(movimiento.getCantidad()).thenReturn(2);
-		when(trebejoOrigen.isTrebejoMovido()).thenReturn(true);
 		
 		cantidadPrecondition.check(tableroSnapshot, movimiento);
 	}
 	
 	@Test(expected=MovimientoIlegalException.class)
 	public void shouldThrowsMovimientoIlegalBecauseIllegalCantidadOnFirst() {
-		trebejoOrigen = spy(new Peon(colorOrigen));
 		when(tableroSnapshot.getTrebejo(destino)).thenReturn(trebejoDestino);
 		when(trebejoDestino.getColor()).thenReturn(colorOrigen);
 		when(movimiento.getCantidad()).thenReturn(3);
-		when(trebejoOrigen.isTrebejoMovido()).thenReturn(false);
 		
 		cantidadPrecondition.check(tableroSnapshot, movimiento);
 	}
 	
 	@Test
 	public void shouldNotThrowsBecauseTwoMovesOnFirst() {
-		trebejoOrigen = spy(new Peon(colorOrigen));
 		when(tableroSnapshot.getTrebejo(destino)).thenReturn(trebejoDestino);
 		when(tableroSnapshot.getTrebejo(origen)).thenReturn(trebejoOrigen);
 		when(trebejoDestino.getColor()).thenReturn(colorOrigen);
 		when(movimiento.getCantidad()).thenReturn(2);
-		when(trebejoOrigen.isTrebejoMovido()).thenReturn(false);
+
 		cantidadPrecondition.check(tableroSnapshot, movimiento);
 	}
 	
 	@Test
 	public void shouldNotThrowsBecauseOneMoveOnFirst() {
-		trebejoOrigen = spy(new Peon(colorOrigen));
 		when(tableroSnapshot.getTrebejo(destino)).thenReturn(trebejoDestino);
 		when(trebejoDestino.getColor()).thenReturn(colorOrigen);
 		when(movimiento.getCantidad()).thenReturn(1);
-		when(trebejoOrigen.isTrebejoMovido()).thenReturn(false);
 		
 		cantidadPrecondition.check(tableroSnapshot, movimiento);
 	}
 	
 	@Test
 	public void shouldNotThrowsBecauseOneMoveOnMoved() {
-		trebejoOrigen = spy(new Peon(colorOrigen));
+		Movimiento movimientoAnterior = mock(Movimiento.class);
+		trebejoOrigen.addMovimiento(movimientoAnterior);
+		
 		when(tableroSnapshot.getTrebejo(destino)).thenReturn(trebejoDestino);
 		when(trebejoDestino.getColor()).thenReturn(colorOrigen);
 		when(movimiento.getCantidad()).thenReturn(1);
-		when(trebejoOrigen.isTrebejoMovido()).thenReturn(true);
 		
 		cantidadPrecondition.check(tableroSnapshot, movimiento);
 	}
