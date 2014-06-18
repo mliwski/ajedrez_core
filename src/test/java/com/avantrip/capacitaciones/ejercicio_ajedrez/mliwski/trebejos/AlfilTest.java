@@ -5,6 +5,7 @@ import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,6 +19,7 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.exceptions.ReyAmena
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.exceptions.TipoMovimientoNoPermitidoException;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.TipoMovimiento;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movimiento.MovimientoPrecondition;
 
 public class AlfilTest {
 
@@ -53,6 +55,15 @@ public class AlfilTest {
 		new Alfil(null);
 	}
 	
+	@Test
+	public void preconditionsShouldBeTheSame() {
+		Alfil alfil1 = new Alfil(colorAlfil);
+		List<MovimientoPrecondition> preconditions1 = alfil1.getMovimientoPreconditions();
+		Alfil alfil2 = new Alfil(colorAlfil);
+		List<MovimientoPrecondition> preconditions2 = alfil2.getMovimientoPreconditions();
+		
+		assertThat(preconditions1, sameInstance(preconditions2));
+	}
 	
 	@Test
 	public void shouldGetColorOrigen() {

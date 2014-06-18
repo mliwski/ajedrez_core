@@ -15,21 +15,24 @@ public class Caballo extends Trebejo {
 	private static final List<TipoMovimiento> TIPOS_ESPERADOS = Arrays.asList(TipoMovimiento.Ele);
 	private static final Integer CANTIDAD_MAXIMA_MOVIMIENTOS = 1;
 	
-	//TODO: Pasarla a estatica e inicializar en bloque estatico (no hay riesgo de zona critica en este punto)
-	private List<MovimientoPrecondition> preconditions = new ArrayList<MovimientoPrecondition>();
+	private static List<MovimientoPrecondition> preconditions;
 	
 	public Caballo(Color color) {
 		super(color);
-		
-		preconditions.add(new TipoMovimientoCorrectoPrecondition(TIPOS_ESPERADOS));
-		preconditions.add(new CantidadMaximaPrecondition(CANTIDAD_MAXIMA_MOVIMIENTOS));
-		preconditions.add(new DestinoOcupablePrecondition());
-		preconditions.add(new ReySeguroPrecondition());
+		synchronized (this) {
+			if (preconditions == null) {
+				preconditions = new ArrayList<MovimientoPrecondition>();
+				preconditions.add(new TipoMovimientoCorrectoPrecondition(TIPOS_ESPERADOS));
+				preconditions.add(new CantidadMaximaPrecondition(CANTIDAD_MAXIMA_MOVIMIENTOS));
+				preconditions.add(new DestinoOcupablePrecondition());
+				preconditions.add(new ReySeguroPrecondition());
+			}
+		}
 	}
 
 	@Override
 	protected List<MovimientoPrecondition> getMovimientoPreconditions() {
-		return this.preconditions;
+		return Caballo.preconditions;
 	}
 
 }

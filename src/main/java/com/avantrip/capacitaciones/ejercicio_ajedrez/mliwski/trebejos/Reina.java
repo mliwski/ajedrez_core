@@ -14,22 +14,25 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movim
 public class Reina extends Trebejo {
 	private static final List<TipoMovimiento> TIPOS_ESPERADOS = Arrays.asList(TipoMovimiento.Vertical, TipoMovimiento.Horizontal, TipoMovimiento.Diagonal);
 	
-	//TODO: Pasarla a estatica e inicializar en bloque estatico (no hay riesgo de zona critica en este punto)
-	private List<MovimientoPrecondition> preconditions = new ArrayList<MovimientoPrecondition>();
-	
+	private static List<MovimientoPrecondition> preconditions;
 	
 	public Reina(Color color) {
 		super(color);
 		
-		preconditions.add(new TipoMovimientoCorrectoPrecondition(TIPOS_ESPERADOS));
-		preconditions.add(new CaminoLibrePrecondition());
-		preconditions.add(new DestinoOcupablePrecondition());
-		preconditions.add(new ReySeguroPrecondition());
+		synchronized (this) {
+			if (preconditions == null) {
+				preconditions = new ArrayList<MovimientoPrecondition>();
+				preconditions.add(new TipoMovimientoCorrectoPrecondition(TIPOS_ESPERADOS));
+				preconditions.add(new CaminoLibrePrecondition());
+				preconditions.add(new DestinoOcupablePrecondition());
+				preconditions.add(new ReySeguroPrecondition());
+			}
+		}
 	}
 
 	@Override
 	protected List<MovimientoPrecondition> getMovimientoPreconditions() {
-		return this.preconditions;
+		return Reina.preconditions;
 	}
 
 }

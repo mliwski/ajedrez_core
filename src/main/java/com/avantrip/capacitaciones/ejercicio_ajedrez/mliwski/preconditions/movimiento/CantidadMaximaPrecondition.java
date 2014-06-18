@@ -1,7 +1,7 @@
 package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movimiento;
 
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.TableroSnapshot;
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.exceptions.MovimientoIlegalException;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.exceptions.CantidadMaximaSuperadaException;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
 
 public class CantidadMaximaPrecondition extends MovimientoPrecondition{
@@ -15,7 +15,7 @@ public class CantidadMaximaPrecondition extends MovimientoPrecondition{
 	protected void checkMovimientoPreconditions(TableroSnapshot tableroSnapshot, Movimiento movimiento) {
 		Integer cantidad = movimiento.getCantidad();
 		if(cantidad > cantidadMaxima ) {
-			throw new MovimientoIlegalException("El trebejo que desea mover solo puede moverse hasta " + cantidadMaxima + " veces (cantidad deseada=" + cantidad + ")");
+			throw new CantidadMaximaSuperadaException("El trebejo que desea mover solo puede moverse hasta " + cantidadMaxima + " veces (cantidad deseada=" + cantidad + ")");
 		}
 	}
 }
