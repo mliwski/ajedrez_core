@@ -3,6 +3,7 @@ package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movi
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Escaque;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.TableroSnapshot;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.exceptions.MovimientoIlegalException;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.exceptions.TipoMovimientoNoPermitidoException;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.TipoMovimiento;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Trebejo;
@@ -26,7 +27,7 @@ public class MovimientoVerticalChain extends PeonDestinoOcupableChain {
 
 		//TODO: Soportar peon al paso (utilizar fila segun tipo de ataque e info del tablero snapshot)
 		if( movimientoDiagonal && destinoOcupado == false ) {
-			throw new MovimientoIlegalException("El peon solo puede moverse en diagonal si va a comer.");
+			throw new TipoMovimientoNoPermitidoException("El peon solo puede moverse en diagonal si va a comer.");
 		}
 		
 	}

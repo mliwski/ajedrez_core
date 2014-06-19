@@ -2,6 +2,7 @@ package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movi
 
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Escaque;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.TableroSnapshot;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.exceptions.CantidadMaximaSuperadaException;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.exceptions.MovimientoIlegalException;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movimiento.CantidadMaximaPrecondition;
@@ -24,7 +25,7 @@ public class PeonCantidadPrecondition extends MovimientoPeonPrecondition{
 		
 		boolean firstMoveAttempt = movimiento.getCantidad() == MOVIMIENTO_DOBLE;
 		if(firstMoveAttempt && peon.isTrebejoMovido()) {
-			throw new MovimientoIlegalException("El peon solo puede mover dos posiciones en el primer movimiento");
+			throw new CantidadMaximaSuperadaException("El peon solo puede mover dos posiciones en el primer movimiento");
 		}
 	}
 
