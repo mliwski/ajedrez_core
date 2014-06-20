@@ -1,5 +1,6 @@
 package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.commands;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Escaque;
@@ -8,6 +9,7 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.TableroSnapshot;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.capturas.CapturaStrategy;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.notifications.Notification;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.notifications.TrebejoCapturadoNotification;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Trebejo;
 
 public class MoverCommand extends Command {
@@ -41,26 +43,39 @@ public class MoverCommand extends Command {
 
 	@Override
 	public List<Notification> ejecutar() {
-		List<Notification> notifications = null;
-		
 		TableroSnapshot tableroSnapshot = tablero.getSnapshot();		
+		
 		trebejo.checkPreconditions(tableroSnapshot, movimiento);
-		
-		//TODO: Implementar el notifications evaluator, debe evaluar por:
-		// - Pieza comida Basarlo en el capturaStrategy del Trebejo
-		CapturaStrategy capturaStrategy = trebejo.getCapturaStrategy();
-		Trebejo trebejoCapturado = capturaStrategy.getTrebejoCapturado(tableroSnapshot, movimiento);
-		
-		tablero.moverTrebejo(movimiento);
+		List<Notification> notifications = evaluateNotificationsForTrebejoCapturado(tableroSnapshot);
+
+		tablero.ejecutarMovimiento(movimiento);
 		trebejo.addMovimiento(movimiento);
 
-		//TODO: Implementar el notifications evaluator, debe evaluar por:
-		// -- Comida para pasante
-		//TODO: Implementar el notification Coronacion (Solo para el peon) 
+		//TODO: Implementar el notification (Aca o en un observer) 
+		// - Coronacion (Solo para el peon) 
 		// - Tablas
 		// - Jaque como notificacion
 
 
 		return notifications;
+	}
+
+	private List<Notification> evaluateNotificationsForTrebejoCapturado(TableroSnapshot tableroSnapshot) {
+		List<Notification> notifications = new ArrayList<Notification>();
+		
+		Trebejo trebejoCapturado = getTrebejoCapturado(tableroSnapshot, movimiento);
+		
+		if(trebejoCapturado != null) {
+			TrebejoCapturadoNotification trebejoCapturadoNotification = new TrebejoCapturadoNotification(trebejoCapturado);
+			notifications.add(trebejoCapturadoNotification);
+		}
+		
+		return notifications;
+	}
+
+	private Trebejo getTrebejoCapturado(TableroSnapshot tableroSnapshot, Movimiento movimiento) {
+		CapturaStrategy capturaStrategy = trebejo.getCapturaStrategy();
+		Trebejo trebejoCapturado = capturaStrategy.getTrebejoCapturado(tableroSnapshot, movimiento);
+		return trebejoCapturado;
 	}
 }

@@ -13,14 +13,11 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Rey;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Torre;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Trebejo;
 import com.google.common.collect.HashBiMap;
-import com.google.common.collect.ImmutableBiMap;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 
 public class Tablero {
 	private HashBiMap<Escaque, Trebejo> escaques;
-	private Multimap<Color, Trebejo> trebejosComidos;
+	private Multimap<Color, Trebejo> trebejosCapturados;
 	
 	private Map<Color, Rey> reyes;
 	
@@ -110,25 +107,31 @@ public class Tablero {
 		return escaques.inverse().get(rey);
 	}
 
-	public void moverTrebejo(Movimiento movimiento){
+	//TODO: Ver si se puede mejorar la legibilidad y el nivel de abstraccion
+	public void ejecutarMovimiento(Movimiento movimiento){
 		Escaque origen = movimiento.getOrigen();
 		Escaque destino = movimiento.getDestino();
 		Trebejo trebejo = escaques.get(origen);
-		checkMoverTrebejoPreconditions(trebejo);
+		Trebejo trebejoCapturado = escaques.get(destino);
+		
+		checkejecutarMovimientoPreconditions(trebejo);
 		
 		escaques.remove(origen);
 		escaques.put(destino, trebejo);
+		
+		if(trebejoCapturado != null){
+			Color colorTrebejoCapturado = trebejoCapturado.getColor();
+			trebejosCapturados.put(colorTrebejoCapturado, trebejoCapturado);
+		}
 	}
 
-	private void checkMoverTrebejoPreconditions(Trebejo trebejo) {
+	private void checkejecutarMovimientoPreconditions(Trebejo trebejo) {
 		if(trebejo == null) {
 			throw new IllegalStateException("No se puede mover si en el origen no hay un trebejo.");
 		}
 	}
 
 	public boolean isEscaqueAmenazadoPorColor(Escaque destino, Color color) {
-		DireccionAtaque direccionAtaque = color.getContrincante().getDireccionAtaque();
-		
 		//FIXME: Refactorear POR DIOS!!!!
 //		for (Trebejo trebejo : escaques.values()) {
 //			if(trebejo.getColor().equals(color)) {
