@@ -3,6 +3,7 @@ package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -68,6 +69,22 @@ public class ReyTest {
 	}
 	
 	@Test
+	public void trebejoWithSameColorShouldBeEquals() {
+		Rey rey1 = new Rey(colorRey);
+		Rey rey2 = new Rey(colorRey);
+		
+		assertThat(rey1, equalTo(rey2));
+	}
+	
+	@Test
+	public void trebejoWithDifferentColorShouldntBeEquals() {
+		Rey rey1 = new Rey(colorRey);
+		Rey rey2 = new Rey(colorRey.getContrincante());
+		
+		assertThat(rey1, not(equalTo(rey2)));
+	}
+	
+	@Test
 	public void shouldGetColorOrigen() {
 		assertThat(rey.getColor(), equalTo(colorRey));
 	}
@@ -107,7 +124,7 @@ public class ReyTest {
 	@Test(expected=ReyAmenazadoException.class)
 	public void shouldThrowExceptionBecauseReyExpuesto() {
 		Escaque escaqueDelRey = mock(Escaque.class);
-		when(tableroSnapshot.getEscaqueDelRey(colorRey)).thenReturn(escaqueDelRey);
+		when(tableroSnapshot.getEscaque(rey)).thenReturn(escaqueDelRey);
 		Color colorContrincante = colorRey.getContrincante();
 		when(tableroSnapshot.isEscaqueAmenazadoPorColor(escaqueDelRey, colorContrincante)).thenReturn(true);
 		

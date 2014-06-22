@@ -66,6 +66,22 @@ public class AlfilTest {
 	}
 	
 	@Test
+	public void trebejoWithSameColorShouldBeEquals() {
+		Alfil alfil1 = new Alfil(colorAlfil);
+		Alfil alfil2 = new Alfil(colorAlfil);
+		
+		assertThat(alfil1, equalTo(alfil2));
+	}
+	
+	@Test
+	public void trebejoWithDifferentColorShouldntBeEquals() {
+		Alfil alfil1 = new Alfil(colorAlfil);
+		Alfil alfil2 = new Alfil(colorAlfil.getContrincante());
+		
+		assertThat(alfil1, not(equalTo(alfil2)));
+	}
+	
+	@Test
 	public void shouldGetColorOrigen() {
 		assertThat(alfil.getColor(), equalTo(colorAlfil));
 	}
@@ -79,6 +95,11 @@ public class AlfilTest {
 	@Test
 	public void shouldGetTrebejoNoMovido() {
 		assertThat(alfil.isTrebejoMovido(), equalTo(false));
+	}
+	
+	@Test
+	public void shouldGetCapturaStrategyDefault() {
+		assertThat(alfil.getCapturaStrategy(), instanceOf(CapturaStrategyDefault.class));
 	}
 
 	@Test(expected=TipoMovimientoNoPermitidoException.class)
@@ -121,7 +142,9 @@ public class AlfilTest {
 	@Test(expected=ReyAmenazadoException.class)
 	public void shouldThrowExceptionBecauseReyExpuesto() {
 		Escaque escaqueDelRey = mock(Escaque.class);
-		when(tableroSnapshot.getEscaqueDelRey(colorAlfil)).thenReturn(escaqueDelRey);
+		Rey rey = new Rey(colorAlfil);
+
+		when(tableroSnapshot.getEscaque(rey)).thenReturn(escaqueDelRey);
 		Color colorContrincante = colorAlfil.getContrincante();
 		when(tableroSnapshot.isEscaqueAmenazadoPorColor(escaqueDelRey, colorContrincante)).thenReturn(true);
 		
@@ -131,11 +154,6 @@ public class AlfilTest {
 	@Test
 	public void shouldCheckPreconditionsWithoutException() {
 		alfil.checkPreconditions(tableroSnapshot, movimiento);
-	}
-
-	@Test
-	public void shouldGetCapturaStrategyDefault() {
-		assertThat(alfil.getCapturaStrategy(), instanceOf(CapturaStrategyDefault.class));
 	}
 
 }

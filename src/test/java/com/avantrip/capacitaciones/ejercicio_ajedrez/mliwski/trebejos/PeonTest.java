@@ -3,6 +3,7 @@ package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -67,6 +68,22 @@ public class PeonTest {
 		List<MovimientoPrecondition> preconditions2 = peon2.getMovimientoPreconditions();
 		
 		assertThat(preconditions1, sameInstance(preconditions2));
+	}
+	
+	@Test
+	public void trebejoWithSameColorShouldBeEquals() {
+		Peon peon1 = new Peon(colorPeon);
+		Peon peon2 = new Peon(colorPeon);
+		
+		assertThat(peon1, equalTo(peon2));
+	}
+	
+	@Test
+	public void trebejoWithDifferentColorShouldntBeEquals() {
+		Peon peon1 = new Peon(colorPeon);
+		Peon peon2 = new Peon(colorPeon.getContrincante());
+		
+		assertThat(peon1, not(equalTo(peon2)));
 	}
 	
 	@Test
@@ -141,7 +158,8 @@ public class PeonTest {
 	@Test(expected=ReyAmenazadoException.class)
 	public void shouldThrowExceptionBecauseReyExpuesto() {
 		Escaque escaqueDelRey = mock(Escaque.class);
-		when(tableroSnapshot.getEscaqueDelRey(colorPeon)).thenReturn(escaqueDelRey);
+		Rey rey = new Rey(colorPeon);
+		when(tableroSnapshot.getEscaque(rey)).thenReturn(escaqueDelRey);
 		Color colorContrincante = colorPeon.getContrincante();
 		when(tableroSnapshot.isEscaqueAmenazadoPorColor(escaqueDelRey, colorContrincante)).thenReturn(true);
 		

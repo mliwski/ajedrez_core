@@ -1,4 +1,4 @@
-package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski;
+package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos;
 
 public enum DireccionAtaque {
 	Adelante(1),

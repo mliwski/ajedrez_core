@@ -13,6 +13,7 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimie
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movimiento.MovimientoPrecondition;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movimiento.ReySeguroPrecondition;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Color;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Rey;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Trebejo;
 
 public class ReySeguroPreconditionTest {
@@ -43,7 +44,8 @@ public class ReySeguroPreconditionTest {
 		when(movimiento.getOrigen()).thenReturn(origen);
 		when(movimiento.getDestino()).thenReturn(destino);
 		
-		when(tableroSnapshot.getEscaqueDelRey(colorOrigen)).thenReturn(destino);
+		Rey rey = new Rey(colorOrigen);
+		when(tableroSnapshot.getEscaque(rey)).thenReturn(destino);
 		
 		
 		reySeguroPrecondition = new ReySeguroPrecondition();

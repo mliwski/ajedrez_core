@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Escaque;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Tablero;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.TableroInstance;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.TableroSnapshot;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.capturas.CapturaStrategy;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
@@ -13,11 +14,11 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.notifications.Trebe
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Trebejo;
 
 public class MoverCommand extends Command {
-	private Tablero tablero;
+	private TableroInstance tablero;
 	private Movimiento movimiento;
 	private Trebejo trebejo;
 
-	public MoverCommand(Tablero tablero, Escaque origen, Escaque destino) {
+	public MoverCommand(TableroInstance tablero, Escaque origen, Escaque destino) {
 		checkArgumentsPreconditions(tablero, origen, destino);
 		checkTrebejoEnOrigenPrecondition(origen);
 		

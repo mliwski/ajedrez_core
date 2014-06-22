@@ -1,6 +1,5 @@
 package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos;
 
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.DireccionAtaque;
 
 public enum Color {
 	Blanco(DireccionAtaque.Adelante),

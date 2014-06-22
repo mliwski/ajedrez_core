@@ -63,6 +63,22 @@ public class CaballoTest {
 		assertThat(preconditions1, sameInstance(preconditions2));
 	}
 	
+	@Test
+	public void trebejoWithSameColorShouldBeEquals() {
+		Caballo caballo1 = new Caballo(colorCaballo);
+		Caballo caballo2 = new Caballo(colorCaballo);
+		
+		assertThat(caballo1, equalTo(caballo2));
+	}
+	
+	@Test
+	public void trebejoWithDifferentColorShouldntBeEquals() {
+		Caballo caballo1 = new Caballo(colorCaballo);
+		Caballo caballo2 = new Caballo(colorCaballo.getContrincante());
+		
+		assertThat(caballo1, not(equalTo(caballo2)));
+	}
+	
 	
 	@Test
 	public void shouldGetColorOrigen() {
@@ -110,7 +126,8 @@ public class CaballoTest {
 	@Test(expected=ReyAmenazadoException.class)
 	public void shouldThrowExceptionBecauseReyExpuesto() {
 		Escaque escaqueDelRey = mock(Escaque.class);
-		when(tableroSnapshot.getEscaqueDelRey(colorCaballo)).thenReturn(escaqueDelRey);
+		Rey rey = new Rey(colorCaballo);
+		when(tableroSnapshot.getEscaque(rey)).thenReturn(escaqueDelRey);
 		Color colorContrincante = colorCaballo.getContrincante();
 		when(tableroSnapshot.isEscaqueAmenazadoPorColor(escaqueDelRey, colorContrincante)).thenReturn(true);
 		
