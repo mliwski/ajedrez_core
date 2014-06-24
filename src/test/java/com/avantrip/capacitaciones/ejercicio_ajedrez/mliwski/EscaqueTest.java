@@ -1,12 +1,17 @@
 package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski;
 
-import static org.hamcrest.MatcherAssert.*;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 import org.junit.Test;
 
 public class EscaqueTest {
 
+	@Test(expected=IllegalArgumentException.class)
+	public void shouldNotBuildEscaqueWithNullLetra() {
+		new Escaque(null, 2);
+	}
+	
 	@Test(expected=IllegalArgumentException.class)
 	public void shouldNotBuildIlegalEscaqueByLetraMinLimit() {
 		Character badCharacter = (char) ((int)'a' - 1);
@@ -19,6 +24,11 @@ public class EscaqueTest {
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
+	public void shouldNotBuildEscaqueWithNullNumero() {
+		new Escaque('a', null);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
 	public void shouldNotBuildIlegalEscaqueByNumeroMinLimit() {
 		new Escaque('d', -3);
 	}
@@ -26,6 +36,14 @@ public class EscaqueTest {
 	@Test(expected=IllegalArgumentException.class)
 	public void shouldNotBuildIlegalEscaqueByNumeroMaxLimit() {
 		new Escaque('d', 9);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void shouldThrowExceptionOnDistanciaNumeroWithNullParam() {
+		Escaque escaque_1 = new Escaque('a', 2);
+		Escaque escaque_2 = null;
+
+		escaque_1.getDistanciaNumero(escaque_2);
 	}
 	
 	@Test
@@ -59,6 +77,14 @@ public class EscaqueTest {
 		assertThat(distanciaNumero, equalTo(0));
 	}
 	
+	@Test(expected=IllegalArgumentException.class)
+	public void shouldThrowExceptionOnDistanciaLetraWithNullParam() {
+		Escaque escaque_1 = new Escaque('a', 2);
+		Escaque escaque_2 = null;
+
+		escaque_1.getDistanciaLetra(escaque_2);
+	}
+	
 	@Test
 	public void shouldReturnDistanciaLetraLowerThanZero() {
 		Integer distanciaEsperada = -1;
@@ -87,5 +113,14 @@ public class EscaqueTest {
 		Integer distanciaLetra = escaque_1.getDistanciaLetra(escaque_2);
 		
 		assertThat(distanciaLetra, equalTo(0));
+	}
+	
+	@Test
+	public void shouldReturnSameEscaque() {
+		Escaque escaque_1 = new Escaque('a', 8);
+		Escaque escaque_2 = new Escaque('a', 8);
+		Boolean sameEscaque = escaque_1.equals(escaque_2);
+		
+		assertThat(sameEscaque, equalTo(true));
 	}
 }

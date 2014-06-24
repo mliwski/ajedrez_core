@@ -52,7 +52,7 @@ public class MoverCommand extends Command {
 		tablero.ejecutarMovimiento(movimiento);
 		trebejo.addMovimiento(movimiento);
 
-		//TODO: Implementar el notification (Aca o en un observer) 
+		//TODO: Implementar el notification (Aca o en un observer) para 
 		// - Coronacion (Solo para el peon) 
 		// - Tablas
 		// - Jaque como notificacion

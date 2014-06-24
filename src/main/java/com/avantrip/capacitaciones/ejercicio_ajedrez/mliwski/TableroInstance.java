@@ -1,11 +1,9 @@
 package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Alfil;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Caballo;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Color;
@@ -14,22 +12,14 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Reina;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Rey;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Torre;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Trebejo;
-import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
 
-public class TableroInstance implements Tablero {
-	private HashBiMap<Escaque, Trebejo> escaquesTrebejosMap;
-	private Multimap<Color, Trebejo> trebejosCapturados;
-	
-	private Map<Color, Rey> reyes;
+public class TableroInstance extends Tablero {
+	private Map<Escaque, Trebejo> escaquesTrebejosMap;
 	
 	public TableroInstance() {
-		trebejosCapturados = HashMultimap.create();
+		setTrebejosCapturados(new ArrayList<Trebejo>(30));
 		escaquesTrebejosMap = HashBiMap.create(32);
-		//TODO: Ver como hacerlo sin mapa ... son solo 2 (quizas enum interno)
-		reyes = new HashMap<Color, Rey>(2);
 		
 		//TODO: Crear algo para hacerlo mas prolijo
 		posicionarTorres(Color.Blanco);
@@ -43,6 +33,8 @@ public class TableroInstance implements Tablero {
 		posicionarAlfiles(Color.Negro);
 		posicionarReinaRey(Color.Negro);
 		posicionarPeones(Color.Negro);
+		
+		setEscaquesTrebejosMap(escaquesTrebejosMap);
 	}
 
 	private void posicionarTorres(Color color) {
@@ -88,7 +80,6 @@ public class TableroInstance implements Tablero {
 		escaque = new Escaque(letra, numero);
 		Rey rey = new Rey(color);
 		escaquesTrebejosMap.put(escaque, rey);
-		reyes.put(color, rey);
 	}
 
 	private void posicionarPeones(Color color) {
@@ -101,87 +92,13 @@ public class TableroInstance implements Tablero {
 			letra = (char)((int)letra + 1);
 		}
 	}
-
-	public Trebejo getTrebejo(Escaque escaque) {
-		return escaquesTrebejosMap.get(escaque);
-	}
-	
-	public Escaque getEscaque(Trebejo trebejo) {
-		BiMap<Trebejo, Escaque> trebejosEscaquesMap = escaquesTrebejosMap.inverse();
-		Escaque escaque = trebejosEscaquesMap.get(trebejo);
-		return escaque;
-	}
-	
-	//TODO: Eliminar o refactorear o algo
-	public Escaque getEscaqueDelRey(Color color) {
-		Rey rey = reyes.get(color);
-		return escaquesTrebejosMap.inverse().get(rey);
-	}
-
-	//TODO: Ver si se puede mejorar la legibilidad y el nivel de abstraccion
-	public void ejecutarMovimiento(Movimiento movimiento){
-		Escaque origen = movimiento.getOrigen();
-		Escaque destino = movimiento.getDestino();
-		Trebejo trebejo = escaquesTrebejosMap.get(origen);
-		Trebejo trebejoCapturado = escaquesTrebejosMap.get(destino);
-		
-		checkejecutarMovimientoPreconditions(trebejo);
-		
-		escaquesTrebejosMap.remove(origen);
-		escaquesTrebejosMap.put(destino, trebejo);
-		
-		if(trebejoCapturado != null){
-			Color colorTrebejoCapturado = trebejoCapturado.getColor();
-			trebejosCapturados.put(colorTrebejoCapturado, trebejoCapturado);
-		}
-	}
-
-	private void checkejecutarMovimientoPreconditions(Trebejo trebejo) {
-		if(trebejo == null) {
-			throw new IllegalStateException("No se puede mover si en el origen no hay un trebejo.");
-		}
-	}
-
-	public boolean isEscaqueAmenazadoPorColor(Escaque destino, Color color) {
-		//FIXME: Refactorear POR DIOS!!!!
-//		for (Trebejo trebejo : escaquesTrebejosMap.values()) {
-//			if(trebejo.getColor().equals(color)) {
-//				Movimiento movimiento = new Movimiento(escaquesTrebejosMap.inverse().get(trebejo), destino, direccionAtaque);
-//				try {
-//					trebejo.checkPreconditions(movimiento);
-//					return true;
-//				} catch(MovimientoIlegalException movimientoIlegalException){
-//					
-//				}
-//			}
-//		}
-		return false;
-	}
 	
 	public TableroSnapshot getSnapshot() {
-		ArrayList<Trebejo> trebejosCapturadosList = getTrebejosCapturadosList();
-//		getEscaquesMap();
-		TableroSnapshot tableroSnapshot = new TableroSnapshot(escaquesTrebejosMap, trebejosCapturadosList);
+		List<Trebejo> trebejosCapturados = getTrebejosCapturados();
+		Map<Escaque, Trebejo> escaquesTrebejosMap = getEscaquesTrebejosMap();
+		
+		TableroSnapshot tableroSnapshot = new TableroSnapshot(escaquesTrebejosMap, trebejosCapturados);
 		
 		return tableroSnapshot;
 	}
-
-	private ArrayList<Trebejo> getTrebejosCapturadosList() {
-		List<Trebejo> trebejosCapturadosBlancos = (List<Trebejo>) this.trebejosCapturados.get(Color.Blanco);
-		List<Trebejo> trebejosCapturadosNegros = (List<Trebejo>) this.trebejosCapturados.get(Color.Negro);
-		
-		ArrayList<Trebejo> trebejosCapturados = new ArrayList<Trebejo>();
-		trebejosCapturados.addAll(trebejosCapturadosBlancos);
-		trebejosCapturados.addAll(trebejosCapturadosNegros);
-		
-		return trebejosCapturados;
-	}
-	
-//	private void getEscaquesMap() {
-//		Map<Escaque, Trebejo> escaquesMap = new HashMap<Escaque, Trebejo>(escaquesTrebejosMap.size());
-//		for(Escaque escaque : escaquesTrebejosMap.keySet()){
-//			Trebejo trebejo = escaquesTrebejosMap.get(escaque);
-//			escaquesMap.put(escaque, trebejo);
-//		}
-//	}
 }

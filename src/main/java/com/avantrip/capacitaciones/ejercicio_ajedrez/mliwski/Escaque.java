@@ -9,12 +9,7 @@ public class Escaque {
 	
 	private Character letra;
 	private Integer numero;
-	
-	@SuppressWarnings("unused")
-	private Escaque() {
-		//Avoid unuseful escaque creation
-	}
-	
+
 	public Escaque(Character letra, Integer numero){
 		checkArgumentPreconditions(letra, numero);
 			
@@ -23,6 +18,9 @@ public class Escaque {
 	}
 
 	private void checkArgumentPreconditions(Character letra, Integer numero) {
+		if(letra == null || numero == null) {
+			throw new IllegalArgumentException("Se deben conocer la letra y el numero para crear el escaque;");
+		}
 		if(LETRA_MINIMA.compareTo(letra) > 0 || LETRA_MAXIMA.compareTo(letra) < 0) {
 			throw new IllegalArgumentException("En el ajedrez la letra de los escaques debe estar entre " + LETRA_MINIMA + " y " + LETRA_MAXIMA + "( recibido = " + letra + ")");
 		}
