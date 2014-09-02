@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.TipoMovimiento;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movimiento.CaminoLibrePrecondition;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movimiento.MovimientoPrecondition;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movimiento.ReySeguroPrecondition;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movimiento.TipoMovimientoCorrectoPrecondition;
@@ -27,6 +28,7 @@ public class Peon extends Trebejo {
 				preconditions.add(new TipoMovimientoCorrectoPrecondition(TIPOS_ESPERADOS));
 				preconditions.add(new PeonCantidadPrecondition());
 				preconditions.add(new PeonDestinoOcupablePrecondition());
+				preconditions.add(new CaminoLibrePrecondition());
 				preconditions.add(new PeonDireccionAdelantePrecondition());
 				preconditions.add(new ReySeguroPrecondition());
 			}

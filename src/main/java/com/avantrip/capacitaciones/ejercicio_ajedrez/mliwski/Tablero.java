@@ -1,35 +1,36 @@
 package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Color;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Trebejo;
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Multimaps;
+import com.google.common.collect.SetMultimap;
 
 public abstract class Tablero {
-	private HashBiMap<Escaque, Trebejo> escaquesTrebejosMap;
+	private Map<Escaque, Trebejo> escaquesTrebejosMap;
 	private List<Trebejo> trebejosCapturados;
-	
-	public Trebejo getTrebejo(Escaque escaque) {
-		return escaquesTrebejosMap.get(escaque);
-	}
-	
-	public Escaque getEscaque(Trebejo trebejo) {
-		BiMap<Trebejo, Escaque> trebejosEscaquesMap = escaquesTrebejosMap.inverse();
-		Escaque escaque = trebejosEscaquesMap.get(trebejo);
-		return escaque;
-	}
 
+	//FIXME: Todo esto tiene que estar encapsulado en el comando mover
+	// Para eso crear los metodos
+	// - capturarTrebejo(Trebejo, Escaque) ???
+	// - moverTrebejo(Movimiento)
 	public void ejecutarMovimiento(Movimiento movimiento) {
+		//TODO: Mejorar niveles de abstraccion para claridad de codigo
+		checkEjecutarMovimientoPreconditions(movimiento);
+		
 		Escaque origen = movimiento.getOrigen();
 		Escaque destino = movimiento.getDestino();
-		Trebejo trebejo = escaquesTrebejosMap.get(origen);
-		Trebejo trebejoCapturado = escaquesTrebejosMap.get(destino);
-		
-		checkejecutarMovimientoPreconditions(trebejo);
+		Trebejo trebejo = getTrebejo(origen);
+
+		//TODO: Me suena raro enviarme a mi ... puedo hacer lo que quiero => revisar
+		Trebejo trebejoCapturado = trebejo.getTrebejoCapturado(this, movimiento);
 		
 		escaquesTrebejosMap.remove(origen);
 		escaquesTrebejosMap.put(destino, trebejo);
@@ -39,30 +40,42 @@ public abstract class Tablero {
 		}
 	}
 
-	private void checkejecutarMovimientoPreconditions(Trebejo trebejo) {
-		if(trebejo == null) {
+	private void checkEjecutarMovimientoPreconditions(Movimiento movimiento) {
+		if(movimiento == null) {
+			throw new IllegalArgumentException("No se puede mover si no se conoce el movimiento.");
+		}
+
+		Escaque origen = movimiento.getOrigen();
+		Trebejo trebejoOrigen = getTrebejo(origen);
+
+		if(trebejoOrigen == null) {
 			throw new IllegalStateException("No se puede mover si en el origen no hay un trebejo.");
 		}
 	}
 
-	public boolean isEscaqueAmenazadoPorColor(Escaque destino, Color color) {
-		//TODO: Implementar
-		return false;
+	public Trebejo getTrebejo(Escaque escaque) {
+		return escaquesTrebejosMap.get(escaque);
+	}
+	
+	public Multimap<Trebejo,Escaque> getTrebejosEscaques() {
+		SetMultimap<Escaque, Trebejo> escaquesTrebejosMultimap = Multimaps.forMap(escaquesTrebejosMap);
+		Multimap<Trebejo, Escaque> trebejosEscaques = Multimaps.invertFrom(escaquesTrebejosMultimap, HashMultimap.<Trebejo, Escaque> create());
+		return trebejosEscaques;
+	}
+	
+	public Map<Escaque, Trebejo> getEscaquesTrebejosMap() {
+		return Maps.newHashMap(this.escaquesTrebejosMap);
+	}
+	
+	public List<Trebejo> getTrebejosCapturados() {
+		return Lists.newArrayList(this.trebejosCapturados);
 	}
 	
 	protected void setEscaquesTrebejosMap(Map<Escaque, Trebejo> escaquesTrebejosMap) {
-		this.escaquesTrebejosMap = HashBiMap.create(escaquesTrebejosMap);
-	}
-	
-	protected Map<Escaque, Trebejo> getEscaquesTrebejosMap() {
-		return this.escaquesTrebejosMap;
+		this.escaquesTrebejosMap = new HashMap<Escaque, Trebejo>(escaquesTrebejosMap);
 	}
 	
 	protected void setTrebejosCapturados(List<Trebejo> trebejosCapturados) {
 		this.trebejosCapturados = trebejosCapturados;
 	}
-	
-	protected List<Trebejo> getTrebejosCapturados() {
-		return this.trebejosCapturados;
-	}; 
 }

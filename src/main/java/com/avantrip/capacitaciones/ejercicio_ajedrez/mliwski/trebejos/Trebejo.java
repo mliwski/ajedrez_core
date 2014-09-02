@@ -3,6 +3,7 @@ package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Tablero;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.TableroSnapshot;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.capturas.CapturaStrategy;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.capturas.CapturaStrategyDefault;
@@ -34,12 +35,14 @@ public abstract class Trebejo {
 		List<MovimientoPrecondition> movimientoPreconditions = getMovimientoPreconditions();
 		for (MovimientoPrecondition precondition : movimientoPreconditions) {
 			precondition.check(tableroSnapshot, movimiento);
+			tableroSnapshot.restart();
 		}
 	}; 
 	protected abstract List<MovimientoPrecondition> getMovimientoPreconditions();
 
-	public CapturaStrategy getCapturaStrategy() {
-		return capturaStrategy;
+	public Trebejo getTrebejoCapturado(Tablero tablero, Movimiento movimiento) {
+		Trebejo trebejoCapturado = capturaStrategy.getTrebejoCapturado(tablero, movimiento);
+		return trebejoCapturado;
 	}
 	
 	public Color getColor() {
@@ -74,6 +77,6 @@ public abstract class Trebejo {
 	
 	@Override
 	public String toString() {
-		return getClass() + "[" + this.color + "]";
+		return getClass().getSimpleName() + "[" + this.color + "]";
 	}
 }

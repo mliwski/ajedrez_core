@@ -1,6 +1,7 @@
 package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,16 +13,16 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Reina;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Rey;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Torre;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Trebejo;
-import com.google.common.collect.HashBiMap;
 
 public class TableroInstance extends Tablero {
 	private Map<Escaque, Trebejo> escaquesTrebejosMap;
 	
 	public TableroInstance() {
 		setTrebejosCapturados(new ArrayList<Trebejo>(30));
-		escaquesTrebejosMap = HashBiMap.create(32);
-		
+
 		//TODO: Crear algo para hacerlo mas prolijo
+		escaquesTrebejosMap = new HashMap<Escaque, Trebejo>(32);
+		
 		posicionarTorres(Color.Blanco);
 		posicionarCaballos(Color.Blanco);
 		posicionarAlfiles(Color.Blanco);

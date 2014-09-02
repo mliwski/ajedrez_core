@@ -7,7 +7,6 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Escaque;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Tablero;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.TableroInstance;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.TableroSnapshot;
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.capturas.CapturaStrategy;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.notifications.Notification;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.notifications.TrebejoCapturadoNotification;
@@ -24,6 +23,7 @@ public class MoverCommand extends Command {
 		
 		this.movimiento = new Movimiento(origen,destino);
 		this.tablero = tablero;
+		this.trebejo = tablero.getTrebejo(origen);
 	}
 	
 	private void checkArgumentsPreconditions(Tablero tablero, Escaque origen, Escaque destino) {
@@ -64,7 +64,7 @@ public class MoverCommand extends Command {
 	private List<Notification> evaluateNotificationsForTrebejoCapturado(TableroSnapshot tableroSnapshot) {
 		List<Notification> notifications = new ArrayList<Notification>();
 		
-		Trebejo trebejoCapturado = getTrebejoCapturado(tableroSnapshot, movimiento);
+		Trebejo trebejoCapturado = trebejo.getTrebejoCapturado(tableroSnapshot, movimiento);
 		
 		if(trebejoCapturado != null) {
 			TrebejoCapturadoNotification trebejoCapturadoNotification = new TrebejoCapturadoNotification(trebejoCapturado);
@@ -72,11 +72,5 @@ public class MoverCommand extends Command {
 		}
 		
 		return notifications;
-	}
-
-	private Trebejo getTrebejoCapturado(TableroSnapshot tableroSnapshot, Movimiento movimiento) {
-		CapturaStrategy capturaStrategy = trebejo.getCapturaStrategy();
-		Trebejo trebejoCapturado = capturaStrategy.getTrebejoCapturado(tableroSnapshot, movimiento);
-		return trebejoCapturado;
 	}
 }
