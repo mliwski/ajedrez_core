@@ -1,13 +1,8 @@
 package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.nullValue;
-import static org.hamcrest.Matchers.sameInstance;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.hamcrest.Matchers.*;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -83,6 +78,27 @@ public abstract class TrebejoTest {
 
 		tableroSnapshot = buildTableroMock(escaquesTrebejos);
 
+	}
+	
+	private TableroSnapshot buildTableroMock(Map<Escaque, Trebejo> escaquesTrebejos) {
+		TableroSnapshot tablero = mock(TableroSnapshot.class);
+
+		SetMultimap<Escaque, Trebejo> escaquesTrebejosMultimap = Multimaps .forMap(escaquesTrebejos);
+		Multimap<Trebejo, Escaque> trebejosEscaques = Multimaps.invertFrom(escaquesTrebejosMultimap, HashMultimap.<Trebejo, Escaque> create());
+		when(tablero.getTrebejosEscaques()).thenReturn(trebejosEscaques);
+
+		Map<Escaque, Trebejo> escaquesTrebejosCopy = Maps.newHashMap(escaquesTrebejos);
+		when(tablero.getEscaquesTrebejosMap()).thenReturn(escaquesTrebejosCopy);
+
+		when(tablero.getTrebejosCapturados()).thenReturn(Collections.<Trebejo> emptyList());
+
+		for (Entry<Escaque, Trebejo> escaqueTrebejo : escaquesTrebejos.entrySet()) {
+			Escaque escaque = escaqueTrebejo.getKey();
+			Trebejo trebejo = escaqueTrebejo.getValue();
+			when(tablero.getTrebejo(escaque)).thenReturn(trebejo);
+		}
+
+		return tablero;
 	}
 	
 	@Test
@@ -230,27 +246,6 @@ public abstract class TrebejoTest {
 
 		TableroSnapshot tableroSnapshot = new TableroSnapshot(escaquesTrebejos, new ArrayList<Trebejo>());
 		trebejoPropio.checkPreconditions(tableroSnapshot, getMovimiento());
-	}
-
-	private TableroSnapshot buildTableroMock(Map<Escaque, Trebejo> escaquesTrebejos) {
-		TableroSnapshot tablero = mock(TableroSnapshot.class);
-
-		SetMultimap<Escaque, Trebejo> escaquesTrebejosMultimap = Multimaps .forMap(escaquesTrebejos);
-		Multimap<Trebejo, Escaque> trebejosEscaques = Multimaps.invertFrom(escaquesTrebejosMultimap, HashMultimap.<Trebejo, Escaque> create());
-		when(tablero.getTrebejosEscaques()).thenReturn(trebejosEscaques);
-
-		Map<Escaque, Trebejo> escaquesTrebejosCopy = Maps.newHashMap(escaquesTrebejos);
-		when(tablero.getEscaquesTrebejosMap()).thenReturn(escaquesTrebejosCopy);
-
-		when(tablero.getTrebejosCapturados()).thenReturn(Collections.<Trebejo> emptyList());
-
-		for (Entry<Escaque, Trebejo> escaqueTrebejo : escaquesTrebejos.entrySet()) {
-			Escaque escaque = escaqueTrebejo.getKey();
-			Trebejo trebejo = escaqueTrebejo.getValue();
-			when(tablero.getTrebejo(escaque)).thenReturn(trebejo);
-		}
-
-		return tablero;
 	}
 
 	@Test

@@ -19,7 +19,7 @@ public class MoverCommand extends Command {
 
 	public MoverCommand(TableroInstance tablero, Escaque origen, Escaque destino) {
 		checkArgumentsPreconditions(tablero, origen, destino);
-		checkTrebejoEnOrigenPrecondition(origen);
+		checkTrebejoEnOrigenPrecondition(tablero, origen);
 		
 		this.movimiento = new Movimiento(origen,destino);
 		this.tablero = tablero;
@@ -33,12 +33,15 @@ public class MoverCommand extends Command {
 		if(origen == null || destino == null) {
 			throw new IllegalArgumentException("Para mover se necesitan conocer el origen y el destino");
 		}
+		if(origen.equals(destino)) {
+			throw new IllegalArgumentException("El origen y el destino deben ser distintos");
+		}
 	}
 
-	private void checkTrebejoEnOrigenPrecondition(Escaque origen) {
+	private void checkTrebejoEnOrigenPrecondition(TableroInstance tablero, Escaque origen) {
 		Trebejo trebejoEncontrado = tablero.getTrebejo(origen);
 		if(trebejoEncontrado == null){
-			throw new IllegalArgumentException("Para poder mover, el origen debe tener un trebejo");
+			throw new IllegalStateException("Para poder mover, el origen debe tener un trebejo");
 		}
 	}
 
@@ -56,6 +59,7 @@ public class MoverCommand extends Command {
 		// - Coronacion (Solo para el peon) 
 		// - Tablas
 		// - Jaque como notificacion
+		//Seguramente convenga realizaro cuando tenga la lista de movimientos habilitados, es mas facil de evaluar
 
 
 		return notifications;
