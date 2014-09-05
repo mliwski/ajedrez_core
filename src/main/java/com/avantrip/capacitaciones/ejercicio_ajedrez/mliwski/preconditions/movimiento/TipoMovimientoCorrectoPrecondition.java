@@ -2,10 +2,10 @@ package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movi
 
 import java.util.List;
 
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.TableroSnapshot;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.exceptions.TipoMovimientoNoPermitidoException;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.TipoMovimiento;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.tableros.TableroSnapshot;
 
 public class TipoMovimientoCorrectoPrecondition extends MovimientoPrecondition{
 	private List<TipoMovimiento> tiposEsperados;

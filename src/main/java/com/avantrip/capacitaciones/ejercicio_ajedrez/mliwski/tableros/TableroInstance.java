@@ -1,10 +1,11 @@
-package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski;
+package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.tableros;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Escaque;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Alfil;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Caballo;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Color;

@@ -3,12 +3,12 @@ package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Tablero;
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.TableroSnapshot;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.capturas.CapturaStrategy;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.capturas.CapturaStrategyDefault;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movimiento.MovimientoPrecondition;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.tableros.Tablero;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.tableros.TableroSnapshot;
 
 public abstract class Trebejo {
 	private Color color;

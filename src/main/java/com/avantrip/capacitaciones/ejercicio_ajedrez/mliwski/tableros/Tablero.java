@@ -1,9 +1,12 @@
-package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski;
+package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.tableros;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Escaque;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Trebejo;
 import com.google.common.collect.HashMultimap;
@@ -77,5 +80,10 @@ public abstract class Tablero {
 	
 	protected void setTrebejosCapturados(List<Trebejo> trebejosCapturados) {
 		this.trebejosCapturados = trebejosCapturados;
+	}
+	
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
 	}
 }

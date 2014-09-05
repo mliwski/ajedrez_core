@@ -1,4 +1,4 @@
-package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski;
+package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.tableros;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
@@ -12,7 +12,10 @@ import java.util.Collection;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Escaque;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.tableros.TableroInstance;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.tableros.TableroSnapshot;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Alfil;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Caballo;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.trebejos.Color;

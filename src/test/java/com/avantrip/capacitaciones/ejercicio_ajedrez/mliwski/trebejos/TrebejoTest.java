@@ -6,17 +6,13 @@ import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Escaque;
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.TableroSnapshot;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.TestUtils;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.exceptions.CaminoOcupadoException;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.exceptions.CantidadMaximaSuperadaException;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.exceptions.DestinoNoOcupableException;
@@ -25,82 +21,25 @@ import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.exceptions.ReyAmena
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.Movimiento;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.movimientos.TipoMovimiento;
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.preconditions.movimiento.MovimientoPrecondition;
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Multimaps;
-import com.google.common.collect.SetMultimap;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.tableros.TableroSnapshot;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.tableros.TableroSnapshot.TableroSnapshotBuilder;
 
 //TODO: Mejorar el codigo no son tan claros los metodos de los abstractos
-public abstract class TrebejoTest {
-	private Object semaphore = new Object();
-
-	private static Map<Color, Rey> mapaTrebejosRey = null;
-	private static Map<Color, Escaque> mapaEscaquesRey = null;
-
-	private static List<TipoMovimiento> tiposDeMovimiento = null;
-
-	private TableroSnapshot tableroSnapshot;
+public abstract class TrebejoTest
+ {
+	private TableroSnapshotBuilder tableroSnapshotBuilder;
+	private List<TipoMovimiento> tiposDeMovimiento;
 
 	@Before
 	public void beforeEveryTest() {		
-		synchronized (semaphore) {
-			if (mapaTrebejosRey == null) {
-				Rey reyBlanco = new Rey(Color.Blanco);
-				Escaque escaqueReyBlanco = new Escaque('e', 1);
+		tiposDeMovimiento = Arrays.asList(TipoMovimiento.Vertical, TipoMovimiento.Horizontal, TipoMovimiento.Diagonal, TipoMovimiento.Ele);
 
-				Rey reyNegro = new Rey(Color.Negro);
-				Escaque escaqueReyNegro = new Escaque('e', 8);
+		tableroSnapshotBuilder = TestUtils.getWorkingTableroSnapshotBuilder();
 
-				mapaTrebejosRey = ImmutableMap.of(Color.Blanco, reyBlanco, Color.Negro, reyNegro);
-				mapaEscaquesRey = ImmutableMap.of(Color.Blanco, escaqueReyBlanco, Color.Negro, escaqueReyNegro);
-
-				tiposDeMovimiento = Arrays.asList(TipoMovimiento.Vertical, TipoMovimiento.Horizontal, TipoMovimiento.Diagonal, TipoMovimiento.Ele);
-			}
-		}
-		
 		Trebejo trebejo = getTrebejo();
 		Escaque escaque = getEscaqueDeTrebejo();
-
-		Color color = getColor();
-		Color colorContrincante = color.getContrincante();
-
-		Escaque escaqueReyPropio = mapaEscaquesRey.get(color);
-		Rey reyPropio = mapaTrebejosRey.get(color);
-		Escaque escaqueReyContrincante = mapaEscaquesRey.get(colorContrincante);
-		Rey reyContrincante = mapaTrebejosRey.get(colorContrincante);
-
-		Map<Escaque, Trebejo> escaquesTrebejos = new HashMap<Escaque, Trebejo>();
-		escaquesTrebejos.put(escaqueReyPropio, reyPropio);
-		escaquesTrebejos.put(escaqueReyContrincante, reyContrincante);
-		escaquesTrebejos.put(escaque, trebejo);
-
-		tableroSnapshot = buildTableroMock(escaquesTrebejos);
-
+		tableroSnapshotBuilder.with(escaque, trebejo);
 	}
-	
-	private TableroSnapshot buildTableroMock(Map<Escaque, Trebejo> escaquesTrebejos) {
-		TableroSnapshot tablero = mock(TableroSnapshot.class);
-
-		SetMultimap<Escaque, Trebejo> escaquesTrebejosMultimap = Multimaps .forMap(escaquesTrebejos);
-		Multimap<Trebejo, Escaque> trebejosEscaques = Multimaps.invertFrom(escaquesTrebejosMultimap, HashMultimap.<Trebejo, Escaque> create());
-		when(tablero.getTrebejosEscaques()).thenReturn(trebejosEscaques);
-
-		Map<Escaque, Trebejo> escaquesTrebejosCopy = Maps.newHashMap(escaquesTrebejos);
-		when(tablero.getEscaquesTrebejosMap()).thenReturn(escaquesTrebejosCopy);
-
-		when(tablero.getTrebejosCapturados()).thenReturn(Collections.<Trebejo> emptyList());
-
-		for (Entry<Escaque, Trebejo> escaqueTrebejo : escaquesTrebejos.entrySet()) {
-			Escaque escaque = escaqueTrebejo.getKey();
-			Trebejo trebejo = escaqueTrebejo.getValue();
-			when(tablero.getTrebejo(escaque)).thenReturn(trebejo);
-		}
-
-		return tablero;
-	}
-	
 	@Test
 	public abstract void shouldThrowExceptionBecauseNoColor();
 
@@ -147,12 +86,14 @@ public abstract class TrebejoTest {
 		when(movimiento.getTipo()).thenReturn(getMovimientosPermitidos().get(0));
 		when(movimiento.getCantidad()).thenReturn(getCantidadMaxima()+1);
 		
+		TableroSnapshot tableroSnapshot = tableroSnapshotBuilder.build();		
 		getTrebejo().checkPreconditions(tableroSnapshot, movimiento);
 	}
 	
 	//TODO: Mejorar este test
 	@Test
 	public void shouldThrowExceptionBecauseTipoMovimientoMal() throws Exception {
+		TableroSnapshot tableroSnapshot = tableroSnapshotBuilder.build();
 		Integer movimientosIlegalesDetectados = 0;
 		
 		List<TipoMovimiento> movimientosIlegales = new ArrayList<TipoMovimiento>(tiposDeMovimiento);
@@ -175,6 +116,7 @@ public abstract class TrebejoTest {
 	
 	@Test(expected=CaminoOcupadoException.class)
 	public void shouldThrowExceptionBecauseCaminoOcupado() {
+		TableroSnapshot tableroSnapshot = spy(tableroSnapshotBuilder.build());
 		Trebejo trebejoEnCamino = mock(Trebejo.class);
 		Escaque escaqueEnCamino = mock(Escaque.class);
 		
@@ -182,24 +124,6 @@ public abstract class TrebejoTest {
 		when(movimiento.getOrigen()).thenReturn(getOrigen());
 		when(movimiento.getDestino()).thenReturn(getDestino());
 		when(movimiento.getTipo()).thenReturn(getMovimientosPermitidos().get(0));
-		
-		Trebejo trebejoPropio = getTrebejo();
-		Escaque escaquePropio = getEscaqueDeTrebejo();
-
-		Color colorPropio = trebejoPropio.getColor();
-		Color colorContrincante = colorPropio.getContrincante();
-
-		Escaque escaqueReyPropio = mapaEscaquesRey.get(colorPropio);
-		Rey reyPropio = mapaTrebejosRey.get(colorPropio);
-		Escaque escaqueReyContrincante = mapaEscaquesRey.get(colorContrincante);
-		Rey reyContrincante = mapaTrebejosRey.get(colorContrincante);
-
-		Map<Escaque, Trebejo> escaquesTrebejos = new HashMap<Escaque, Trebejo>();
-		escaquesTrebejos.put(escaqueReyPropio, reyPropio);
-		escaquesTrebejos.put(escaqueReyContrincante, reyContrincante);
-		escaquesTrebejos.put(escaquePropio, trebejoPropio);
-
-		TableroSnapshot tableroSnapshot = buildTableroMock(escaquesTrebejos);
 		
 		when(tableroSnapshot.getTrebejo(escaqueEnCamino)).thenReturn(trebejoEnCamino);
 		when(movimiento.getCamino()).thenReturn(Arrays.asList(escaqueEnCamino));
@@ -209,14 +133,13 @@ public abstract class TrebejoTest {
 
 	@Test(expected = DestinoNoOcupableException.class)
 	public void shouldThrowExceptionBecauseDestinoMismoColor() {
+		TableroSnapshot tableroSnapshot = spy(tableroSnapshotBuilder.build());
 		Trebejo trebejoPropio = getTrebejo();
-		Color colorPropio = trebejoPropio.getColor();
 
 		Trebejo trebejoDestino = mock(Trebejo.class);
-
 		Escaque destino = getMovimiento().getDestino();
 
-		when(trebejoDestino.getColor()).thenReturn(colorPropio);
+		when(trebejoDestino.getColor()).thenReturn(getColor());
 		when(tableroSnapshot.getTrebejo(destino)).thenReturn(trebejoDestino);
 
 		trebejoPropio.checkPreconditions(tableroSnapshot, getMovimiento());
@@ -225,64 +148,39 @@ public abstract class TrebejoTest {
 	@Test(expected = ReyAmenazadoException.class)
 	public void reySeguroTest() throws Exception {
 		Trebejo trebejoPropio = getTrebejo();
-		Escaque escaquePropio = getEscaqueDeTrebejo();
 
 		Trebejo trebejoContrincante = getTrebejoContrincante();
 		Escaque escaqueContrincante = getEscaqueDeTrebejoContrincante();
 
-		Color colorPropio = trebejoPropio.getColor();
-		Color colorContrincante = colorPropio.getContrincante();
+		tableroSnapshotBuilder.with(escaqueContrincante, trebejoContrincante);
+		TableroSnapshot tableroSnapshot = tableroSnapshotBuilder.build();
 
-		Escaque escaqueReyPropio = mapaEscaquesRey.get(colorPropio);
-		Rey reyPropio = mapaTrebejosRey.get(colorPropio);
-		Escaque escaqueReyContrincante = mapaEscaquesRey.get(colorContrincante);
-		Rey reyContrincante = mapaTrebejosRey.get(colorContrincante);
-
-		Map<Escaque, Trebejo> escaquesTrebejos = new HashMap<Escaque, Trebejo>();
-		escaquesTrebejos.put(escaqueReyPropio, reyPropio);
-		escaquesTrebejos.put(escaqueReyContrincante, reyContrincante);
-		escaquesTrebejos.put(escaqueContrincante, trebejoContrincante);
-		escaquesTrebejos.put(escaquePropio, trebejoPropio);
-
-		TableroSnapshot tableroSnapshot = new TableroSnapshot(escaquesTrebejos, new ArrayList<Trebejo>());
 		trebejoPropio.checkPreconditions(tableroSnapshot, getMovimiento());
 	}
 
 	@Test
 	public void shouldCheckPreconditionsWithoutException() {
+		TableroSnapshot tableroSnapshot = tableroSnapshotBuilder.build();
 		getTrebejo().checkPreconditions(tableroSnapshot, getMovimiento());
 		assertThat(true, is(true));
 	}
 
 	@Test
 	public void shouldNotReturnTrebejoCapturado() {
-		Trebejo trebejoCapturado = getTrebejo().getTrebejoCapturado(tableroSnapshot, getMovimiento());
+		TableroSnapshot tableroSnapshot = tableroSnapshotBuilder.build();
+		Trebejo trebejo = getTrebejo();
+		Trebejo trebejoCapturado = trebejo.getTrebejoCapturado(tableroSnapshot, getMovimiento());
 		assertThat(trebejoCapturado, is(nullValue()));
 	}
 
 	@Test
 	public void shouldReturnTrebejoCapturado() {
-		Trebejo trebejoPropio = getTrebejo();
-		Escaque escaquePropio = getEscaqueDeTrebejo();
-
 		Trebejo trebejoContrincante = getTrebejoContrincante();
 		Escaque escaqueContrincante = getMovimiento().getDestino();
 
-		Color colorPropio = trebejoPropio.getColor();
-		Color colorContrincante = colorPropio.getContrincante();
-
-		Escaque escaqueReyPropio = mapaEscaquesRey.get(colorPropio);
-		Rey reyPropio = mapaTrebejosRey.get(colorPropio);
-		Escaque escaqueReyContrincante = mapaEscaquesRey.get(colorContrincante);
-		Rey reyContrincante = mapaTrebejosRey.get(colorContrincante);
-
-		Map<Escaque, Trebejo> escaquesTrebejos = new HashMap<Escaque, Trebejo>();
-		escaquesTrebejos.put(escaqueReyPropio, reyPropio);
-		escaquesTrebejos.put(escaqueReyContrincante, reyContrincante);
-		escaquesTrebejos.put(escaqueContrincante, trebejoContrincante);
-		escaquesTrebejos.put(escaquePropio, trebejoPropio);
-
-		TableroSnapshot tableroSnapshot = buildTableroMock(escaquesTrebejos);
+		tableroSnapshotBuilder.with(escaqueContrincante, trebejoContrincante);
+		TableroSnapshot tableroSnapshot = tableroSnapshotBuilder.build();
+		
 		Trebejo trebejoCapturado = getTrebejo().getTrebejoCapturado(tableroSnapshot, getMovimiento());
 
 		assertThat(trebejoCapturado, is(getTrebejoContrincante()));
@@ -315,7 +213,7 @@ public abstract class TrebejoTest {
 		return new Movimiento(getEscaqueDeTrebejo(), getDestino());
 	}
 	
-	protected TableroSnapshot getTableroSnapshot() {
-		return tableroSnapshot;
-	}
+//	protected TableroSnapshot getTableroSnapshot() {
+//		return tableroSnapshot;
+//	}
 }

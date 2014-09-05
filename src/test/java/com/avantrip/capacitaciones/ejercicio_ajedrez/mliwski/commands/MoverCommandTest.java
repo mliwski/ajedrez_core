@@ -1,14 +1,11 @@
 package com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.commands;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import org.junit.Test;
 
 import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.Escaque;
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.TableroInstance;
-import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.TestUtils;
+import com.avantrip.capacitaciones.ejercicio_ajedrez.mliwski.tableros.TableroInstance;
 
 public class MoverCommandTest {
 
