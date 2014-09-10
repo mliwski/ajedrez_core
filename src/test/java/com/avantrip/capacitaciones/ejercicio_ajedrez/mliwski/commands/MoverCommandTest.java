@@ -69,7 +69,7 @@ public class MoverCommandTest {
 		TableroInstance tablero = mock(TableroInstance.class);
 		Escaque origen = new Escaque('a',1);
 		Escaque destino = new Escaque('a',2);
-		Trebejo trebejo = spy(new TrebejoMock(Color.Blanco));
+		Trebejo trebejo = new TrebejoMock(Color.Blanco);
 
 		when(tablero.getTrebejo(origen)).thenReturn(trebejo);
 		when(tablero.getTrebejo(destino)).thenReturn(null);
@@ -79,11 +79,33 @@ public class MoverCommandTest {
 		assertThat(notifications, is(empty()));
 	}
 	
+	@Test
+	public void notificationsShouldNotBeEmpty() {
+		TableroInstance tablero = mock(TableroInstance.class);
+		Escaque origen = new Escaque('a',1);
+		Escaque destino = new Escaque('a',2);
+		Trebejo trebejoCapturado = new TrebejoMock(Color.Negro);
+		Trebejo trebejo = new TrebejoMock(Color.Blanco, trebejoCapturado);
+
+		when(tablero.getTrebejo(origen)).thenReturn(trebejo);
+		when(tablero.getTrebejo(destino)).thenReturn(trebejo);
+		
+		MoverCommand command = new MoverCommand(tablero, origen, destino);
+		List<Notification> notifications = command.ejecutar();
+		
+		assertThat(notifications, is(not(empty())));
+	}
+	
 	private class TrebejoMock extends Trebejo {
 		private Trebejo trebejoCapturado = null;
 		
 		public TrebejoMock(Color color) {
 			super(color);
+		}
+
+		public TrebejoMock(Color color, Trebejo trebejoCapturado) {
+			this(color);
+			this.trebejoCapturado = trebejoCapturado;
 		}
 
 		@Override
@@ -95,10 +117,5 @@ public class MoverCommandTest {
 		public Trebejo getTrebejoCapturado(Tablero tablero, Movimiento movimiento) {
 			return this.trebejoCapturado;
 		}
-
-//		public void setTrebejoCapturado(Trebejo trebejoCapturado) {
-//			this.trebejoCapturado = trebejoCapturado;
-//		}
-		
 	}
 }
